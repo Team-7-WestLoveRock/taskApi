@@ -3,7 +3,7 @@ package com.nhnacademy.westloverock.taskapi.entity;
 import lombok.*;
 
 import javax.persistence.*;
-
+@Builder
 @Entity
 @Getter
 @Setter
