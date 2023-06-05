@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,9 +18,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    @Column(name = "tasks_id", nullable = false)
-    private Integer taskId;
+    @ManyToOne
+    @JoinColumn(name = "task_id", nullable = false)
+    private Task task;
 
     @Column(name = "user_id", nullable = false, length = 45)
     private String userId;

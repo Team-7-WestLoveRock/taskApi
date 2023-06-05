@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,10 +15,11 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @Column(name = "project_id", nullable = false)
-    private Integer projectId;
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Column(name = "name", nullable = false, unique = true, length = 45)
     private String name;
@@ -25,5 +27,4 @@ public class Tag {
     @Column(name = "color", nullable = false, length = 45)
     private String color;
 
-    // getters and setters
 }

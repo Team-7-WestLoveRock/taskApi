@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -15,10 +16,11 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @Column(name = "project_id", nullable = false)
-    private Integer projectId;
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -35,8 +37,9 @@ public class Task {
     @Column(name = "priority", length = 10)
     private String priority;
 
-    @Column(name = "milestone_id")
-    private Integer milestoneId;
+    @ManyToOne
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
