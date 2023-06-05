@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -17,8 +18,9 @@ public class Milestone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "project_id", nullable = false)
-    private Integer projectId;
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;

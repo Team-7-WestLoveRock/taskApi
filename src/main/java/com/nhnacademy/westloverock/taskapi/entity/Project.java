@@ -1,6 +1,6 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 import lombok.*;
-import org.springframework.scheduling.config.Task;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,5 +30,17 @@ public class Project {
     @Column(name = "create_at", nullable = false)
     private LocalDateTime createAt;
 
+    @ManyToOne
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
+
+    @OneToMany(mappedBy = "project")
+    private List<ProjectAuthority> projectAuthorities;
+
+    @OneToMany(mappedBy = "project")
+    private List<Tag> tags;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 
 }
