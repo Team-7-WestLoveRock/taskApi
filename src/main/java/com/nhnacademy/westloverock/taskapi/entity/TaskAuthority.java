@@ -12,26 +12,27 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Table(name = "Task_Authorities")
-@IdClass(TaskAuthority.TaskAuthorityId.class)
 public class TaskAuthority {
 
-    @Id
-    @ManyToOne
+    @EmbeddedId
+    private Pk id;
+
+    @MapsId("taskId")
     @JoinColumn(name = "task_id", nullable = false)
+    @ManyToOne
     private Task task;
 
-    @Id
-    @Column(name = "user_id", nullable = false, length = 45)
-    private String userId;
-
-    @Column(name = "authority", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String authority;
+
+    @Embeddable
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @EqualsAndHashCode
-    public static class TaskAuthorityId implements Serializable {
-        private Integer task;
+    public static class Pk implements Serializable {
+        private Integer taskId;
+        @Column(name = "user_id")
         private String userId;
     }
 }

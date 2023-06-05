@@ -12,29 +12,28 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Table(name = "Project_Authorities")
-@IdClass(ProjectAuthority.ProjectAuthorityId.class)
 public class ProjectAuthority {
 
-    @Id
-    @ManyToOne
+    @EmbeddedId
+    private Pk id;
+
+    @MapsId("projectId")
     @JoinColumn(name = "project_id", nullable = false)
+    @ManyToOne
     private Project project;
 
-    @Id
-    @Column(name = "user_id", nullable = false, length = 45)
-    private String userId;
-
-    @Column(name = "authority", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String authority;
 
+    @Embeddable
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @EqualsAndHashCode
-    public static class ProjectAuthorityId implements Serializable {
-        private Integer project;
+    public static class Pk implements Serializable {
+        private Integer projectId;
+        @Column(name = "user_id")
         private String userId;
     }
-
 }
 

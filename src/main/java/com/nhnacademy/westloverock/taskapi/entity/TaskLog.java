@@ -13,28 +13,24 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Table(name = "Task_Logs")
-@IdClass(TaskLog.TaskLogId.class)
 public class TaskLog {
 
-    @Id
-    @Column(name = "update_date", nullable = false)
-    private LocalDate updateDate;
+    @EmbeddedId
+    private Pk id;
 
-    @Id
+    @MapsId("taskId")
     @ManyToOne
     @JoinColumn(name = "Tasks_id", nullable = false)
     private Task task;
 
+    @Embeddable
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @EqualsAndHashCode
-    public static class TaskLogId implements Serializable {
-
+    public static class Pk implements Serializable {
+        @Column(name = "update_date", nullable = false)
         private LocalDate updateDate;
-        private Integer task;
+        private int taskId;
     }
 }
-
-
-
