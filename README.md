@@ -36,7 +36,7 @@ Response
 ```
 
 **GET /project/api/projects/{projectId}**  
-ex) 특정 프로젝트 조회
+ex) 특정 프로젝트 조회  
 Response
 ```json
 {
@@ -49,7 +49,7 @@ Response
 ```
 
 **POST /project/api/projects**  
-ex) 프로젝트 생성
+ex) 프로젝트 생성  
 Request
 ```json
 {
@@ -66,7 +66,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}**  
-ex) 프로젝트 멤버 추가
+ex) 프로젝트 멤버 추가  
 Request
 ```json
 [
@@ -85,7 +85,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/{userId}**  
-ex) 프로젝트 멤버 변경
+ex) 프로젝트 멤버 변경  
 Request
 ```json
 {
@@ -102,7 +102,7 @@ Response
 
 ## Tag
 **GET /project/api/projects/{projectId}/tags**
-ex) 태그 조회
+ex) 태그 조회  
 Response
 ```json
 [
@@ -113,7 +113,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/tag**  
-ex) 태그 생성
+ex) 태그 생성  
 Request
 ```json
 {
@@ -124,7 +124,7 @@ Request
 
 
 **PUT /project/api/projects/{projectId}/tag/{tagId}**  
-ex) 태그 수정
+ex) 태그 수정  
 Request
 ```json
 {
@@ -141,7 +141,7 @@ ex) 태그 삭제
 
 ## Milestone
 **GET /project/api/projects/{projectId}/milestones**
-ex) 마일스톤 조회
+ex) 마일스톤 조회  
 Response
 ```json
 [
@@ -159,7 +159,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/milestone**  
-ex) 마일스톤 생성
+ex) 마일스톤 생성  
 Request
 ```json
 {
@@ -171,7 +171,7 @@ Request
 
 
 **PUT /project/api/projects/{projectId}/milestone/{milestoneId}**  
-ex) 마일스톤 수정
+ex) 마일스톤 수정  
 Request
 ```json
 {
@@ -190,7 +190,7 @@ ex) 마일스톤 삭제
 ## Task
 
 **GET /project/api/projects/{projectId}/tasks**  
-ex) 업무 조회
+ex) 업무 조회  
 Response
 ```json
 [
@@ -218,7 +218,7 @@ Response
 ```
 
 **GET /project/api/projects/{projectId}/task/{taskId}**  
-ex) 업무 조회
+ex) 업무 조회  
 Response
 ```json
 {
@@ -234,7 +234,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/task**  
-ex) 업무 생성 (Option: tags, milestone, expirationDate, priority, managerUsers, referenceUsers)    
+ex) 업무 생성 (Option: tags, milestone, expirationDate, priority, managerUsers, referenceUsers)      
 Request
 ```json
 {
@@ -259,7 +259,7 @@ Response
 
 
 **POST /project/api/projects/{projectId}/task/{taskId}**  
-ex) 업무 수정 (+TaskLogs 데이터 추가 필요, + TaskAuthority 변경)
+ex) 업무 수정 (+TaskLogs 데이터 추가 필요, + TaskAuthority 변경)  
 Request
 ```json
 {
@@ -289,7 +289,7 @@ ex) 업무 삭제 (+TaskAuthority까지 같이 삭제)
 ## Comment
 
 **GET /project/api/projects/{projectId}/task/{taskId}/comments**  
-ex) 댓글 조회
+ex) 댓글 조회  
 Response
 ```json
 [
@@ -308,7 +308,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/task/{taskId}/comment/{commentId}**  
-ex) 댓글 수정
+ex) 댓글 수정  
 Request
 ```json
 {
@@ -324,7 +324,7 @@ Response
 ```
 
 **DELETE /project/api/projects/{projectId}/task/{taskId}/comment/{commentId}**  
-ex) 댓글 삭제
+ex) 댓글 삭제 
 
 
 
