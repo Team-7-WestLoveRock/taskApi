@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+@Builder
 @Entity
 @Getter
 @Setter
