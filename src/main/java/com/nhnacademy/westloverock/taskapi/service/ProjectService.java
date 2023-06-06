@@ -23,7 +23,7 @@ public class ProjectService {
 
     public Project createProject(ProjectDto projectDto) {
         if (StringUtils.isEmpty(projectDto.getName()) || StringUtils.isEmpty(projectDto.getDescription())) {
-            throw new IllegalArgumentException("프로젝");
+            throw new IllegalArgumentException("프로젝트는 이름과 설명이 필요합니다.");
         }
 
         Project project = new Project();
