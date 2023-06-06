@@ -85,7 +85,7 @@ Response
 ```
 
 **POST /project/api/projects/{projectId}/{userId}**  
-ex) 프로젝트 멤버 변경  
+ex) 프로젝트 멤버 권한 변경  
 Request
 ```json
 {
