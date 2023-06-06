@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Error Page</title>
   <style>
     body {
@@ -20,6 +21,7 @@
 <div class="container">
   <h1>Error</h1>
   <p>Sorry, an error occurred. Please try again or contact support.</p>
+  <p th:text="${errorMessage}"></p>
 </div>
 </body>
 </html>
