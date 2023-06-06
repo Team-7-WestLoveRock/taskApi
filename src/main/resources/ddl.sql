@@ -1,9 +1,10 @@
+
 create table IF NOT EXISTS Projects
 (
     id          int primary key auto_increment,
     name        varchar(30) not null,
     description text        not null,
-    state       varchar(2)  not null,
+    state       varchar(4)  not null,
     create_at   timestamp   not null
     );
 
