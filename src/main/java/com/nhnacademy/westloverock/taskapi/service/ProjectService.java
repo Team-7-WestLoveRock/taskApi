@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.service;
 
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
+import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public Project updateProject(int id, Project newProjectData) {
+    public Project updateProject(int id, ProjectUpdateRequest newProjectData) {
         return projectRepository.findById(id)
                 .map(project -> {
                     project.setName(newProjectData.getName());
