@@ -1,19 +1,14 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
+import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
@@ -48,9 +43,8 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable int id, @RequestBody Project newProjectData) {
+    public ResponseEntity<Project> updateProject(@PathVariable int id, @RequestBody ProjectUpdateRequest newProjectData) {
         Project updatedProject = projectService.updateProject(id, newProjectData);
         return ResponseEntity.ok(updatedProject);
     }
 }
-
