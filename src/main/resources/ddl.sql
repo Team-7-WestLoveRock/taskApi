@@ -1,4 +1,4 @@
-create table NOT EXISTS Projects
+create table IF NOT EXISTS Projects
 (
     id          int auto_increment
     primary key,
@@ -8,7 +8,7 @@ create table NOT EXISTS Projects
     create_at   timestamp                   not null
     );
 
-create table NOT EXISTS Milestones
+create table IF NOT EXISTS Milestones
 (
     id         int auto_increment,
     project_id int         not null,
@@ -22,7 +22,7 @@ create table NOT EXISTS Milestones
     foreign key (project_id) references Projects (id)
     );
 
-create table NOT EXISTS Project_Authorities
+create table IF NOT EXISTS Project_Authorities
 (
     project_id int         not null,
     user_id    varchar(45) not null,
@@ -32,7 +32,7 @@ create table NOT EXISTS Project_Authorities
     foreign key (project_id) references Projects (id)
     );
 
-create table NOT EXISTS Tags
+create table IF NOT EXISTS Tags
 (
     id         int auto_increment,
     project_id int         not null,
@@ -45,7 +45,7 @@ create table NOT EXISTS Tags
     foreign key (project_id) references Projects (id)
     );
 
-create table NOT EXISTS Tasks
+create table IF NOT EXISTS Tasks
 (
     id               int auto_increment
     primary key,
@@ -65,7 +65,7 @@ create table NOT EXISTS Tasks
     foreign key (project_id) references Projects (id)
     );
 
-create table NOT EXISTS Comments
+create table IF NOT EXISTS Comments
 (
     id         int auto_increment
     primary key,
@@ -78,7 +78,7 @@ create table NOT EXISTS Comments
     foreign key (task_id) references Tasks (id)
     );
 
-create table NOT EXISTS Task_Authorities
+create table IF NOT EXISTS Task_Authorities
 (
     task_id   int         not null,
     user_id   varchar(45) not null,
@@ -88,7 +88,7 @@ create table NOT EXISTS Task_Authorities
     foreign key (task_id) references Tasks (id)
     );
 
-create table NOT EXISTS Task_Logs
+create table IF NOT EXISTS Task_Logs
 (
     update_date int not null,
     task_id     int not null,
@@ -97,7 +97,7 @@ create table NOT EXISTS Task_Logs
     foreign key (task_id) references Tasks (id)
     );
 
-create table NOT EXISTS Tasks_Tags
+create table IF NOT EXISTS Tasks_Tags
 (
     task_id int not null,
     tag_id  int not null,
