@@ -16,4 +16,14 @@ public class ProjectUpdateRequest {
     private String state;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createAt;
+
+    public ProjectUpdateRequest toDto() {
+        ProjectUpdateRequest dto = new ProjectUpdateRequest();
+        dto.setId(this.id);
+        dto.setName(this.name);
+        dto.setDescription(this.description);
+        dto.setState(this.state);
+        dto.setCreateAt(this.createAt);
+        return dto;
+    }
 }

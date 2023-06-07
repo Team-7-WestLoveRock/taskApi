@@ -2,7 +2,6 @@ package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
-import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +56,7 @@ public class ProjectViewController {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
             model.addAttribute("project", projectDto);
-            return "project_form";
+            return "project_edit_form";
         } catch (NumberFormatException e) {
             return "error";
         }

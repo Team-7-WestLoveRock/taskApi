@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/project/api/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
