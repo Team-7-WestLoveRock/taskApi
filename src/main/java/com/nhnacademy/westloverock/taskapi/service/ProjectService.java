@@ -30,7 +30,7 @@ public class ProjectService {
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
         project.setCreateAt(LocalDateTime.now());
-        project.setState("보관");
+        project.setState("진행");
 
         return projectRepository.save(project);
     }
@@ -42,7 +42,7 @@ public class ProjectService {
 
     public Project getProjectById(int id) {
         return projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Project with id " + id + " not found."));
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
     }
 
     public void deleteProject(int id) {
@@ -58,6 +58,6 @@ public class ProjectService {
                     project.setCreateAt(newProjectData.getCreateAt());
                     return projectRepository.save(project);
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Project with id " + id + " not found."));
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
     }
 }

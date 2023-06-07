@@ -2,15 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Projects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Projects</h1>
-<ul>
-    <li th:each="project : ${projects}">
-        <div th:text="${project.name}"></div>
-        <div th:text="${project.description}"></div>
-        <div th:text="${project.createAt}"></div>
-    </li>
-</ul>
+<div class="container">
+    <h1 class="my-4">프로젝트 설정</h1>
+    <div class="row" th:each="project : ${project}">
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        프로젝트명 : <span th:text="${project.name}"></span>
+                    </h4>
+                    설명 : <p class="card-text" th:text="${project.description}"></p>
+                </div>
+                <div class="card-footer">
+                    상태 : <span th:text="${project.state}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
