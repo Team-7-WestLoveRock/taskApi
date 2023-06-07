@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Error Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Error</h1>
+  <p>Sorry, an error occurred. Please try again or contact support.</p>
+  <p th:text="${errorMessage}"></p>
+</div>
+</body>
+</html>

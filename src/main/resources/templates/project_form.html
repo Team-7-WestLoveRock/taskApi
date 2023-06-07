@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create/Edit Project</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<br><br>
+
+<div class="container">
+  <form th:action="@{/project}" th:object="${project}" method="post">
+    <h1>프로젝트 추가</h1>
+    <div class="form-group">
+      <label for="name">프로젝트명</label>
+      <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="3~30자 (영어,한국어,일본어,중국어,숫자,특수 기호().-~)">
+    </div>
+    <div class="form-group">
+      <label for="description">설명</label>
+      <textarea id="description" th:field="*{description}" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">추가</button>
+  </form>
+</div>
+</body>
+</html>

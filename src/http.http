@@ -1,0 +1,28 @@
+POST localhost:8080 /project/api/projects HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "dooray 미니 프로젝트",
+  "description": "김서현, 김정민, 추만석의 두레이 미니프로젝트",
+  "state": "진행",
+  "createdAt": "2023-04-28T05:12:33"
+}
+###
+GET localhost:8080/project/api/projects HTTP/1.1
+
+###
+GET localhost:8080/project/api/projects/3 HTTP/1.1
+
+###
+DELETE localhost:8080/project/api/projects/2 HTTP/1.1
+
+###
+PUT localhost:8080/project/api/projects/3/edit HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "업데이트된 dooray 미니 프로젝트",
+  "description": "업데이트 된김서현, 김정민, 추만석의 두레이 미니프로젝트",
+  "state": "보관",
+  "createdAt": "2023-06-05T05:12:33"
+}

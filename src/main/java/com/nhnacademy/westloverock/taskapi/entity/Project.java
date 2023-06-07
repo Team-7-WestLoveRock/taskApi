@@ -1,4 +1,5 @@
 package com.nhnacademy.westloverock.taskapi.entity;
+import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,5 +44,13 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
-
+    public ProjectDto toDto() {
+        ProjectDto dto = new ProjectDto();
+        dto.setId(this.id);
+        dto.setName(this.name);
+        dto.setDescription(this.description);
+        dto.setState(this.state);
+        dto.setCreateAt(this.createAt);
+        return dto;
+    }
 }

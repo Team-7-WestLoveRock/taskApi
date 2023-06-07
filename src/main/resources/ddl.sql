@@ -1,24 +1,25 @@
-create table IF NOT EXISTS Projects
+create table if not exists Projects
 (
-    id          int primary key auto_increment,
-    name        varchar(30) not null,
+    id          int auto_increment,
+    name        varchar(60) not null,
     description text        not null,
-    state       varchar(2)  not null,
-    create_at   timestamp   not null
+    state       varchar(4)  not null,
+    create_at   timestamp   not null,
+    primary key (id)
     );
 
-create table IF NOT EXISTS Milestones
+create table if not exists Milestones
 (
-    id         int primary key auto_increment,
+    id         int auto_increment,
     project_id int         not null,
     name       varchar(45) not null,
     start_date date        null,
     end_date   date        null,
-    unique (name),
+    primary key (id),
     foreign key (project_id) references Projects (id)
     );
 
-create table IF NOT EXISTS Project_Authorities
+create table if not exists Project_Authorities
 (
     project_id int         not null,
     user_id    varchar(45) not null,
@@ -27,19 +28,19 @@ create table IF NOT EXISTS Project_Authorities
     foreign key (project_id) references Projects (id)
     );
 
-create table IF NOT EXISTS Tags
+create table if not exists Tags
 (
-    id         int primary key auto_increment,
+    id         int auto_increment,
     project_id int         not null,
     name       varchar(45) not null,
     color      varchar(45) not null,
-    unique (name),
+    primary key (id),
     foreign key (project_id) references Projects (id)
     );
 
-create table IF NOT EXISTS Tasks
+create table if not exists Tasks
 (
-    id               int primary key auto_increment,
+    id               int auto_increment,
     project_id       int         not null,
     title            text        not null,
     register_user_id varchar(45) not null,
@@ -48,23 +49,23 @@ create table IF NOT EXISTS Tasks
     priority         varchar(10) null,
     milestone_id     int         null,
     created_at       timestamp   null,
-    unique (register_user_id),
+    primary key (id),
     foreign key (milestone_id) references Milestones (id),
     foreign key (project_id) references Projects (id)
     );
 
-create table IF NOT EXISTS Comments
+create table if not exists Comments
 (
-    id         int primary key auto_increment,
-    task_id    int         not null,
-    user_id    varchar(45) not null,
-    content    varchar(45) not null,
-    created_at timestamp   not null,
-    updated_at timestamp   null,
+    id          int auto_increment,
+    task_id     int         not null,
+    user_id     varchar(45) not null,
+    content     varchar(45) not null,
+    writtenDate timestamp   not null,
+    primary key (id),
     foreign key (task_id) references Tasks (id)
     );
 
-create table IF NOT EXISTS Task_Authorities
+create table if not exists Task_Authorities
 (
     task_id   int         not null,
     user_id   varchar(45) not null,
@@ -73,15 +74,15 @@ create table IF NOT EXISTS Task_Authorities
     foreign key (task_id) references Tasks (id)
     );
 
-create table IF NOT EXISTS Task_Logs
+create table if not exists Task_Logs
 (
-    update_date int not null,
-    task_id     int not null,
+    update_date timestamp not null,
+    task_id     int       not null,
     primary key (update_date, task_id),
     foreign key (task_id) references Tasks (id)
     );
 
-create table IF NOT EXISTS Tasks_Tags
+create table if not exists Tasks_Tags
 (
     task_id int not null,
     tag_id  int not null,
