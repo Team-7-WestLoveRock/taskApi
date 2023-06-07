@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -21,7 +22,7 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public Project createProject(ProjectDto projectDto) {
+    public ProjectDto createProject(ProjectDto projectDto) {
         if (StringUtils.isEmpty(projectDto.getName()) || StringUtils.isEmpty(projectDto.getDescription())) {
             throw new IllegalArgumentException("프로젝트는 이름과 설명이 필요합니다.");
         }
@@ -32,16 +33,19 @@ public class ProjectService {
         project.setCreateAt(LocalDateTime.now());
         project.setState("진행");
 
-        return projectRepository.save(project);
+        Project savedProject = projectRepository.save(project);
+        return savedProject.toDto();
     }
 
-
-    public List<Project> getProjects() {
-        return projectRepository.findAll();
+    public List<ProjectDto> findAllProjects() {
+        return projectRepository.findAll().stream()
+                .map(Project::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Project getProjectById(int id) {
-        return projectRepository.findById(id)
+    public ProjectDto findProjectById(int id) {
+        return projectRepository.findProjectById(id)
+                .map(Project::toDto)
                 .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
     }
 
@@ -49,14 +53,14 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public Project updateProject(int id, ProjectUpdateRequest newProjectData) {
-        return projectRepository.findById(id)
+    public ProjectDto updateProject(int id, ProjectUpdateRequest newProjectData) {
+        return projectRepository.findProjectById(id)
                 .map(project -> {
                     project.setName(newProjectData.getName());
                     project.setDescription(newProjectData.getDescription());
                     project.setState(newProjectData.getState());
                     project.setCreateAt(newProjectData.getCreateAt());
-                    return projectRepository.save(project);
+                    return projectRepository.save(project).toDto();
                 })
                 .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
     }

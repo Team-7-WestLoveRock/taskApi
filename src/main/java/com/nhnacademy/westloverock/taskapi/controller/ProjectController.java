@@ -2,11 +2,12 @@ package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
-import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 
 
@@ -21,19 +22,19 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody ProjectDto projectDto) {
-        Project project = projectService.createProject(projectDto);
-        return ResponseEntity.ok(project);
+    public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
+        ProjectDto project = projectService.createProject(projectDto);
+        return ResponseEntity.ok(project.toDto());
     }
 
     @GetMapping
-    public ResponseEntity<List<Project>> getAllProjects() {
-        return ResponseEntity.ok(projectService.getProjects());
+    public ResponseEntity<List<ProjectDto>> findAllProjects() {
+        return ResponseEntity.ok(projectService.findAllProjects().stream().map(ProjectDto::toDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable int id) {
-        return ResponseEntity.ok(projectService.getProjectById(id));
+    public ResponseEntity<ProjectDto> findProjectById(@PathVariable int id) {
+        return ResponseEntity.ok(projectService.findProjectById(id).toDto());
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +44,8 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable int id, @RequestBody ProjectUpdateRequest newProjectData) {
-        Project updatedProject = projectService.updateProject(id, newProjectData);
-        return ResponseEntity.ok(updatedProject);
+    public ResponseEntity<ProjectDto> updateProject(@PathVariable int id, @RequestBody ProjectUpdateRequest newProjectData) {
+        ProjectDto updatedProject = projectService.updateProject(id, newProjectData);
+        return ResponseEntity.ok(updatedProject.toDto());
     }
 }

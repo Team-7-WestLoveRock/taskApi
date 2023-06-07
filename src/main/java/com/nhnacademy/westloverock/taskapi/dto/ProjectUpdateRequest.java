@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class ProjectUpdateRequest {
-
+    private Integer id;
     private String name;
     private String description;
     private String state;

@@ -21,18 +21,18 @@ public class ProjectViewController {
     }
 
     @GetMapping
-    public String getAllProjects(Model model) {
-        List<Project> projects = projectService.getProjects();
+    public String findAllProjects(Model model) {
+        List<ProjectDto> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
         return "project_list";
     }
 
     @GetMapping("/{id}")
-    public String getProjectById(@PathVariable String id, Model model) {
+    public String findProjectById(@PathVariable String id, Model model) {
         try {
             int projectId = Integer.parseInt(id);
-            Project project = projectService.getProjectById(projectId);
-            model.addAttribute("project", project);
+            ProjectDto projectDto = projectService.findProjectById(projectId);
+            model.addAttribute("project", projectDto);
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";
@@ -55,8 +55,8 @@ public class ProjectViewController {
     public String editProjectForm(@PathVariable String id, Model model) {
         try {
             int projectId = Integer.parseInt(id);
-            Project project = projectService.getProjectById(projectId);
-            model.addAttribute("project", project);
+            ProjectDto projectDto = projectService.findProjectById(projectId);
+            model.addAttribute("project", projectDto);
             return "project_form";
         } catch (NumberFormatException e) {
             return "error";
