@@ -16,8 +16,6 @@ create table if not exists Milestones
     start_date date        null,
     end_date   date        null,
     primary key (id),
-    constraint name_UNIQUE
-    unique (name),
     foreign key (project_id) references Projects (id)
     );
 
@@ -37,8 +35,6 @@ create table if not exists Tags
     name       varchar(45) not null,
     color      varchar(45) not null,
     primary key (id),
-    constraint name_UNIQUE
-    unique (name),
     foreign key (project_id) references Projects (id)
     );
 
@@ -54,8 +50,6 @@ create table if not exists Tasks
     milestone_id     int         null,
     created_at       timestamp   null,
     primary key (id),
-    constraint register_user_id_UNIQUE
-    unique (register_user_id),
     foreign key (milestone_id) references Milestones (id),
     foreign key (project_id) references Projects (id)
     );
