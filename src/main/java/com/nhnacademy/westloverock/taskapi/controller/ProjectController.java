@@ -21,8 +21,8 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
-        ProjectDto project = projectService.createProject(projectDto);
-        return ResponseEntity.ok(project.toDto());
+        projectService.createProject(projectDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -35,15 +35,15 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.findProjectById(id).toDto());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable int id) {
-        projectService.deleteProject(id);
-        return ResponseEntity.ok().build();
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<ProjectDto> updateProject(@PathVariable int id, @RequestBody ProjectUpdateRequest newProjectData) {
         projectService.updateProject(id, newProjectData);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable int id) {
+        projectService.deleteProject(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -4,6 +4,7 @@ import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -27,10 +28,10 @@ public class ProjectService {
         }
 
         Project project = new Project(projectDto.getName(), projectDto.getDescription(), "진행", LocalDateTime.now());
-
         Project savedProject = projectRepository.save(project);
         return savedProject.toDto();
     }
+
     public List<ProjectDto> findAllProjects() {
         return projectRepository.findAll().stream()
                 .map(Project::toDto)

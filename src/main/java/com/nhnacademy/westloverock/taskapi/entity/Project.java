@@ -43,8 +43,13 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
 
-
-    public Project(Integer id,String name, String description, String state, LocalDateTime createAt) {
+    public Project(String name, String description, String state, LocalDateTime createAt) {
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.createAt = createAt;
+    }
+    public Project(int id,String name, String description, String state, LocalDateTime createAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -61,13 +66,8 @@ public class Project {
         dto.setCreateAt(this.createAt);
         return dto;
     }
+
     public void update(String name, String description, String state, LocalDateTime createAt) {
-        this.name = name;
-        this.description = description;
-        this.state = state;
-        this.createAt = createAt;
-    }
-    public Project(String name, String description, String state, LocalDateTime createAt) {
         this.name = name;
         this.description = description;
         this.state = state;
