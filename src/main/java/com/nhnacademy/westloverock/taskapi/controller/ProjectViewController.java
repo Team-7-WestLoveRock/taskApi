@@ -31,7 +31,7 @@ public class ProjectViewController {
         try {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
-            model.addAttribute("project", projectDto);
+            model.addAttribute("projects", projectDto);
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";
