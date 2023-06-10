@@ -53,15 +53,15 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public ProjectDto updateProject(int id, ProjectUpdateRequest newProjectData) {
-        return projectRepository.findProjectById(id)
-                .map(project -> {
-                    project.setName(newProjectData.getName());
-                    project.setDescription(newProjectData.getDescription());
-                    project.setState(newProjectData.getState());
-                    project.setCreateAt(newProjectData.getCreateAt());
-                    return projectRepository.save(project).toDto();
-                })
+    public void updateProject(int id, ProjectUpdateRequest newProjectData) {
+        Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
+        project.setName(newProjectData.getName());
+        project.setDescription(newProjectData.getDescription());
+        project.setState(newProjectData.getState());
+        project.setCreateAt(LocalDateTime.now());
+
+        projectRepository.save(project);
     }
+
 }

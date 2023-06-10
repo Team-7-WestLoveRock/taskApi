@@ -67,7 +67,7 @@ public class ProjectViewController {
         try {
             int projectId = Integer.parseInt(id);
             projectService.updateProject(projectId, projectUpdateRequest);
-            return "redirect:/project/" + id;
+            return "redirect:/project/" + projectId;
         } catch (NumberFormatException e) {
             return "error";
         }

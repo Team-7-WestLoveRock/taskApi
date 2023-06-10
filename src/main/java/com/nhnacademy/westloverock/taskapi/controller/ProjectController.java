@@ -4,10 +4,8 @@ import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.http.ResponseEntity;
 
 
@@ -45,7 +43,7 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProjectDto> updateProject(@PathVariable int id, @RequestBody ProjectUpdateRequest newProjectData) {
-        ProjectDto updatedProject = projectService.updateProject(id, newProjectData);
-        return ResponseEntity.ok(updatedProject.toDto());
+        projectService.updateProject(id, newProjectData);
+        return ResponseEntity.ok().build();
     }
 }

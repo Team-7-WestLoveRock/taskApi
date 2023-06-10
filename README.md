@@ -118,7 +118,7 @@ Request
 ```json
 {
     "name": "태그1",
-    "color": "##FF47",
+    "color": "##FF47"
 }
 ```
 
@@ -129,7 +129,7 @@ Request
 ```json
 {
     "name": "수정된 태그",
-    "color": "#FFEB45",
+    "color": "#FFEB45"
 }
 ```
 
