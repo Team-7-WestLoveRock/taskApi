@@ -25,11 +25,8 @@ class ProjectRepositoryTest {
     @Test
     void testFindProjectById() {
         // given
-        Project testProject = new Project();
-        testProject.setName("Test Project");
-        testProject.setDescription("This is a test project.");
-        testProject.setCreateAt(LocalDateTime.now());
-        testProject.setState("진행");
+        Project testProject = new Project("Test Project","This is a test project.", "진행", LocalDateTime.now());
+
         entityManager.persistAndFlush(testProject);
 
         // when

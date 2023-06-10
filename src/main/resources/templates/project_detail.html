@@ -7,17 +7,17 @@
 <body>
 <div class="container">
     <h1 class="my-4">프로젝트 설정</h1>
-    <div class="row" th:each="project : ${projects}">
+    <div class="row" th:each="project : ${project}">
         <div class="col-lg-4 col-sm-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
                     <h4 class="card-title">
-                        프로젝트명 : <span th:text="${projects.name}"></span>
+                        프로젝트명 : <span th:text="${project.name}"></span>
                     </h4>
-                    설명 : <p class="card-text" th:text="${projects.description}"></p>
+                    설명 : <p class="card-text" th:text="${project.description}"></p>
                 </div>
                 <div class="card-footer">
-                    상태 : <span th:text="${projects.state}"></span>
+                    상태 : <span th:text="${project.state}"></span>
                 </div>
             </div>
         </div>

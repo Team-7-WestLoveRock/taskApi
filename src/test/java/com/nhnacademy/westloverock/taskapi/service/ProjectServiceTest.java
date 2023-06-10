@@ -37,12 +37,7 @@ class ProjectServiceTest {
 
     @BeforeEach
     public void setup() {
-        project = new Project();
-        project.setId(1);
-        project.setName("Test Project");
-        project.setDescription("This is a test project.");
-        project.setCreateAt(LocalDateTime.now());
-        project.setState("진행");
+        project = new Project(1, "Test Project","This is a test project.", "진행", LocalDateTime.now());
 
         projectDto = new ProjectDto();
         projectDto.setId(1);
@@ -62,12 +57,7 @@ class ProjectServiceTest {
         projectDto.setName("Test Project");
         projectDto.setDescription("This is a test project.");
 
-        Project testProject = new Project();
-        testProject.setId(1);
-        testProject.setName("Test Project");
-        testProject.setDescription("This is a test project.");
-        testProject.setCreateAt(LocalDateTime.now());
-        testProject.setState("진행");
+        Project testProject = new Project(1, "Test Project","This is a test project.", "진행", LocalDateTime.now());
 
         given(projectRepository.save(any(Project.class))).willReturn(testProject);
         // when
