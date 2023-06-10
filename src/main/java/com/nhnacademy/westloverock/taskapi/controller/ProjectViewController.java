@@ -21,8 +21,8 @@ public class ProjectViewController {
 
     @GetMapping
     public String findAllProjects(Model model) {
-        List<ProjectDto> projects = projectService.findAllProjects();
-        model.addAttribute("projects", projects);
+        List<ProjectDto> projectList = projectService.findAllProjects();
+        model.addAttribute("projectList", projectList);
         return "project_list";
     }
 
@@ -31,7 +31,7 @@ public class ProjectViewController {
         try {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
-            model.addAttribute("projects", projectDto);
+            model.addAttribute("project", projectDto);
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";

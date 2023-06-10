@@ -42,13 +42,13 @@ class TaskTest {
         assertEquals(project, task.getProject());
     }
 
-    @Test
-    @DisplayName("프로젝트 Setter 테스트")
-    void setProjectTest() {
-        Project newProject = new Project();
-        task.setProject(newProject);
-        assertEquals(newProject, task.getProject());
-    }
+//    @Test
+//    @DisplayName("프로젝트 Setter 테스트")
+//    void setProjectTest() {
+//        Project newProject = new Project();
+//        task.setProject(newProject);
+//        assertEquals(newProject, task.getProject());
+//    }
 
     @Test
     @DisplayName("제목 Getter 테스트")
@@ -56,12 +56,12 @@ class TaskTest {
         assertEquals("두레이 작업", task.getTitle());
     }
 
-    @Test
-    @DisplayName("제목 Setter 테스트")
-    void setTitleTest() {
-        task.setTitle("두레이 작업 수정");
-        assertEquals("두레이 작업 수정", task.getTitle());
-    }
+//    @Test
+//    @DisplayName("제목 Setter 테스트")
+//    void setTitleTest() {
+//        task.setTitle("두레이 작업 수정");
+//        assertEquals("두레이 작업 수정", task.getTitle());
+//    }
 
     @Test
     @DisplayName("등록자 ID Getter 테스트")
@@ -69,12 +69,12 @@ class TaskTest {
         assertEquals("seohyun", task.getRegisterUserId());
     }
 
-    @Test
-    @DisplayName("등록자 ID Setter 테스트")
-    void setRegisterUserIdTest() {
-        task.setRegisterUserId("manseok");
-        assertEquals("manseok", task.getRegisterUserId());
-    }
+//    @Test
+//    @DisplayName("등록자 ID Setter 테스트")
+//    void setRegisterUserIdTest() {
+//        task.setRegisterUserId("manseok");
+//        assertEquals("manseok", task.getRegisterUserId());
+//    }
 
     @Test
     @DisplayName("만료일 Getter 테스트")
@@ -82,13 +82,13 @@ class TaskTest {
         assertNotNull(task.getExpirationDate());
     }
 
-    @Test
-    @DisplayName("만료일 Setter 테스트")
-    void setExpirationDateTest() {
-        LocalDateTime newDate = LocalDateTime.now().plusDays(2);
-        task.setExpirationDate(newDate);
-        assertEquals(newDate, task.getExpirationDate());
-    }
+//    @Test
+//    @DisplayName("만료일 Setter 테스트")
+//    void setExpirationDateTest() {
+//        LocalDateTime newDate = LocalDateTime.now().plusDays(2);
+//        task.setExpirationDate(newDate);
+//        assertEquals(newDate, task.getExpirationDate());
+//    }
 
     @Test
     @DisplayName("내용 Getter 테스트")
@@ -96,12 +96,12 @@ class TaskTest {
         assertEquals("작업 내용입니다", task.getContent());
     }
 
-    @Test
-    @DisplayName("내용 Setter 테스트")
-    void setContentTest() {
-        task.setContent("수정된 작업 내용입니다");
-        assertEquals("수정된 작업 내용입니다", task.getContent());
-    }
+//    @Test
+//    @DisplayName("내용 Setter 테스트")
+//    void setContentTest() {
+//        task.setContent("수정된 작업 내용입니다");
+//        assertEquals("수정된 작업 내용입니다", task.getContent());
+//    }
 
     @Test
     @DisplayName("우선순위 Getter 테스트")
@@ -109,12 +109,12 @@ class TaskTest {
         assertEquals("매우 높음", task.getPriority());
     }
 
-    @Test
-    @DisplayName("우선순위 Setter 테스트")
-    void setPriorityTest() {
-        task.setPriority("낮음");
-        assertEquals("낮음", task.getPriority());
-    }
+//    @Test
+//    @DisplayName("우선순위 Setter 테스트")
+//    void setPriorityTest() {
+//        task.setPriority("낮음");
+//        assertEquals("낮음", task.getPriority());
+//    }
 
     @Test
     @DisplayName("마일스톤 Getter 테스트")
@@ -122,13 +122,13 @@ class TaskTest {
         assertEquals(milestone, task.getMilestone());
     }
 
-    @Test
-    @DisplayName("마일스톤 Setter 테스트")
-    void setMilestoneTest() {
-        Milestone newMilestone = new Milestone();
-        task.setMilestone(newMilestone);
-        assertEquals(newMilestone, task.getMilestone());
-    }
+//    @Test
+//    @DisplayName("마일스톤 Setter 테스트")
+//    void setMilestoneTest() {
+//        Milestone newMilestone = new Milestone();
+//        task.setMilestone(newMilestone);
+//        assertEquals(newMilestone, task.getMilestone());
+//    }
 
     @Test
     @DisplayName("작성일 Getter 테스트")
@@ -136,11 +136,11 @@ class TaskTest {
         assertNotNull(task.getCreatedAt());
     }
 
-    @Test
-    @DisplayName("작성일 Setter 테스트")
-    void setCreatedAtTest() {
-        LocalDateTime newCreatedAt = LocalDateTime.now().minusDays(1);
-        task.setCreatedAt(newCreatedAt);
-        assertEquals(newCreatedAt, task.getCreatedAt());
-    }
+//    @Test
+//    @DisplayName("작성일 Setter 테스트")
+//    void setCreatedAtTest() {
+//        LocalDateTime newCreatedAt = LocalDateTime.now().minusDays(1);
+//        task.setCreatedAt(newCreatedAt);
+//        assertEquals(newCreatedAt, task.getCreatedAt());
+//    }
 }

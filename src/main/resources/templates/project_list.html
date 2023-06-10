@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="project : ${projects}">
+    <tr th:each="project : ${projectList}">
       <td th:text="${project.id}"></td>
       <td>
         <a th:href="@{'/project/' + ${project.id}}" th:text="${project.name}"></a>

@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Table(name = "Project_Authorities")
 public class ProjectAuthority {
 

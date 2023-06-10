@@ -9,10 +9,8 @@ import java.util.List;
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Table(name = "Projects")
 public class Project {
 
@@ -44,6 +42,16 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
+
+
+    public Project(Integer id,String name, String description, String state, LocalDateTime createAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.createAt = createAt;
+    }
+
     public ProjectDto toDto() {
         ProjectDto dto = new ProjectDto();
         dto.setId(this.id);
@@ -52,5 +60,17 @@ public class Project {
         dto.setState(this.state);
         dto.setCreateAt(this.createAt);
         return dto;
+    }
+    public void update(String name, String description, String state, LocalDateTime createAt) {
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.createAt = createAt;
+    }
+    public Project(String name, String description, String state, LocalDateTime createAt) {
+        this.name = name;
+        this.description = description;
+        this.state = state;
+        this.createAt = createAt;
     }
 }
