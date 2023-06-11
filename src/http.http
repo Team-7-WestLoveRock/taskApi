@@ -2,11 +2,8 @@ POST localhost:1998/project/api/projects HTTP/1.1
 Content-Type: application/json
 
 {
-  "id" : 2,
   "name": "dooray 미니 프로젝트",
-  "description": "미니프로젝트 설명",
-  "state": "진행",
-  "createdAt": "2023-04-28T05:12:33"
+  "description": "미니프로젝트 설명"
 }
 
 ###
@@ -25,29 +22,28 @@ Content-Type: application/json
 {
   "name": "업데이트된 dooray 미니 프로젝트",
   "description": "업데이트 된 두레이 미니프로젝트",
-  "state": "보관",
-  "createdAt": "2023-06-05T05:12:33"
+  "state": "보관"
 }
+
 ###
-POST localhost:1998/tag/api/tags HTTP/1.1
+POST localhost:1998/project/api/tags/2 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id" : 2,
   "name": "tag1",
   "color": "blue"
 }
 ###
-GET localhost:1998/tag/api/tags HTTP/1.1
+GET localhost:1998/project/api/tags HTTP/1.1
 
 ###
-GET localhost:1998/tag/api/tags/2 HTTP/1.1
+GET localhost:1998/project/api/tags/1 HTTP/1.1
 
 ###
-DELETE localhost:1998/tag/api/tags/2 HTTP/1.1
+DELETE localhost:1998/project/api/tags/1 HTTP/1.1
 
 ###
-PUT llocalhost:1998/tag/api/tags/2 HTTP/1.1
+PUT localhost:1998/project/api/tags/1 HTTP/1.1
 Content-Type: application/json
 
 {
