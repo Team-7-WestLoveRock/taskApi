@@ -6,6 +6,7 @@ import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.repository.TagRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ public class TagService {
 
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
+    ModelMapper modelMapper = new ModelMapper();
 
 
     public TagService(TagRepository tagRepository, ProjectRepository projectRepository) {
@@ -39,7 +41,11 @@ public class TagService {
         Project project = projectOptional.get();
         Tag tag = new Tag(tagDto.getName(), tagDto.getColor(), project);
         Tag savedTag = tagRepository.save(tag);
-        return savedTag.toDto();
+
+        tagDto.setId(savedTag.getId());  // Add the generated id back into the DTO
+        tagDto.setProjectId(project.getId()); // Update the projectId in the DTO
+
+        return tagDto;  // Return the updated DTO
     }
 
     public List<TagDto> findAllTags() {
@@ -67,4 +73,10 @@ public class TagService {
         return updatedTag.toDto();
     }
 
+    public List<TagDto> findByProjectId(int projectId) {
+        List<Tag> tags = tagRepository.findByProjectId(projectId);
+        return tags.stream()
+                .map(tag -> modelMapper.map(tag, TagDto.class))
+                .collect(Collectors.toList());
+    }
 }

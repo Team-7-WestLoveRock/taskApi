@@ -38,7 +38,7 @@ public class Tag {
     public TagDto toDto() {
         TagDto dto = new TagDto();
         dto.setId(this.id);
-        dto.setProject(this.project);
+        dto.setProjectId(this.project.getId());
         dto.setName(this.name);
         dto.setColor(this.color);
         return dto;

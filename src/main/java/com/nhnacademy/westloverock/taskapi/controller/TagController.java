@@ -3,6 +3,7 @@ package com.nhnacademy.westloverock.taskapi.controller;
 import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,12 @@ public class TagController {
 
     @PostMapping("/{projectId}")
     public ResponseEntity<TagDto> createTag(@PathVariable int projectId, @RequestBody TagDto tagDto) {
-        TagDto createdTag = tagService.createTag(projectId, tagDto);
-        return ResponseEntity.ok(createdTag);
+        try {
+            TagDto createdTag = tagService.createTag(projectId, tagDto);
+            return new ResponseEntity<>(createdTag, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
