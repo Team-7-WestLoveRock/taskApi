@@ -3,6 +3,15 @@
 <head>
     <title>Projects</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -22,15 +31,13 @@
             </div>
         </div>
     </div>
-    <!-- 기존의 프로젝트 세부 정보 레이아웃 하단에 추가 -->
     <h2>Tags</h2>
     <ul>
         <li th:each="tag : ${tags}">
-            <div th:style="'background-color:' + ${tag.color}" style="width: 20px; height: 20px; display: inline-block;"></div>
+            <div class="color-box" th:style="'background-color:' + ${tag.color}"></div>
             <span th:text="${tag.name}"></span>: <span th:text="${tag.color}"></span>
         </li>
     </ul>
-    <!-- 태그 생성 페이지로 이동하는 버튼 -->
     <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>
 </div>
 </body>
