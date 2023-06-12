@@ -22,7 +22,6 @@ class MilestoneTest {
     void setUp() {
         project = new Project();
         milestone = Milestone.builder()
-                .id(1)
                 .project(project)
                 .name("두레이 이해하기")
                 .startDate(LocalDate.now())
