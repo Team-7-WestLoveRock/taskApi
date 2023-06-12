@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/project")
@@ -27,7 +29,13 @@ public class ProjectViewController {
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
+        Map<Integer, List<TagDto>> projectTags = new HashMap<>();
+        for (ProjectDto project : projectList) {
+            List<TagDto> tagList = tagService.findByProjectId(project.getId());
+            projectTags.put(project.getId(), tagList);
+        }
         model.addAttribute("projectList", projectList);
+        model.addAttribute("projectTags", projectTags);
         return "project_list";
     }
 
@@ -70,7 +78,7 @@ public class ProjectViewController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public String updateProject(@PathVariable String id, @ModelAttribute("project") ProjectUpdateRequest projectUpdateRequest) {
         try {
             int projectId = Integer.parseInt(id);
@@ -81,7 +89,7 @@ public class ProjectViewController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteProject(@PathVariable String id) {
         try {
             int projectId = Integer.parseInt(id);
