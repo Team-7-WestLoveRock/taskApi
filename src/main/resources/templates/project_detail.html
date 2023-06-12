@@ -36,6 +36,13 @@
         <li th:each="tag : ${tags}">
             <div class="color-box" th:style="'background-color:' + ${tag.color}"></div>
             <span th:text="${tag.name}"></span>: <span th:text="${tag.color}"></span>
+
+            <a th:href="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/edit'}" class="btn btn-primary">Edit</a>
+
+            <form th:action="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/delete'}" th:method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+
         </li>
     </ul>
     <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>

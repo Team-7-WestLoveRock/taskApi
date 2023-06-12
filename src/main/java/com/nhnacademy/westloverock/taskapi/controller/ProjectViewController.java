@@ -3,6 +3,7 @@ package com.nhnacademy.westloverock.taskapi.controller;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.dto.TagDto;
+import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
 import org.springframework.stereotype.Controller;
@@ -108,6 +109,40 @@ public class ProjectViewController {
             model.addAttribute("tag", new TagDto());
             model.addAttribute("projectId", projectId);
             return "tag_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @GetMapping("/{projectId}/tag/{tagId}/edit")
+    public String editTagForm(@PathVariable String projectId, @PathVariable String tagId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int tagIdInt = Integer.parseInt(tagId);
+            TagDto tagDto = tagService.findTagById(tagIdInt);
+            model.addAttribute("tag", tagDto);
+            model.addAttribute("projectId", projectIdInt);
+            return "tag_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/tag/{tagId}")
+    public String updateTag(@PathVariable String projectId, @PathVariable String tagId, @ModelAttribute("tag") TagUpdateRequest tagUpdateRequest) {
+        try {
+            int tagIdInt = Integer.parseInt(tagId);
+            tagService.updateTag(tagIdInt, tagUpdateRequest);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/tag/{tagId}/delete")
+    public String deleteTag(@PathVariable String projectId, @PathVariable String tagId) {
+        try {
+            int tagIdInt = Integer.parseInt(tagId);
+            tagService.deleteTag(tagIdInt);
+            return "redirect:/project/" + projectId;
         } catch (NumberFormatException e) {
             return "error";
         }
