@@ -30,12 +30,9 @@ public class TagService {
             throw new IllegalArgumentException("태그는 이름과 색상이 필요합니다.");
         }
 
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
-        if(projectOptional.isEmpty()) {
-            throw new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다.");
-        }
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다."));
 
-        Project project = projectOptional.get();
         Tag tag = new Tag(tagDto.getName(), tagDto.getColor(), project);
         Tag savedTag = tagRepository.save(tag);
 
@@ -66,10 +63,11 @@ public class TagService {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));
 
-        if (newTagData.getName() != null && !newTagData.getName().isEmpty()) {
-            tag.update(newTagData.getName(), newTagData.getColor());
+        if (newTagData.getName() == null || newTagData.getName().isEmpty()) {
+            throw new IllegalArgumentException("태그 이름은 비어 있을 수 없습니다.");
         }
 
+        tag.update(newTagData.getName(), newTagData.getColor());
         tagRepository.save(tag);
     }
 
@@ -79,5 +77,4 @@ public class TagService {
                 .map(Tag::toDto)
                 .collect(Collectors.toList());
     }
-
 }
