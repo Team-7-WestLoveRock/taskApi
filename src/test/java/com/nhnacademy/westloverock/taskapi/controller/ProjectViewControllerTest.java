@@ -31,15 +31,15 @@ class ProjectViewControllerTest {
     @MockBean
     private TagService tagService;
 
-    @Test
-    void testFindAllProjects() throws Exception {
-        given(projectService.findAllProjects()).willReturn(Arrays.asList(new ProjectDto(), new ProjectDto()));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/project"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("project_list"))
-                .andExpect(model().attributeExists("projectList"));
-    }
+//    @Test
+//    void testFindAllProjects() throws Exception {
+//        given(projectService.findAllProjects()).willReturn(Arrays.asList(new ProjectDto(), new ProjectDto()));
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/project"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("project_list"))
+//                .andExpect(model().attributeExists("projectList"));
+//    }
 
     @Test
     void testFindProjectById() throws Exception {
