@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class ProjectViewController {
         Map<Integer, List<TagDto>> projectTags = new HashMap<>();
         for (ProjectDto project : projectList) {
             List<TagDto> tagList = tagService.findByProjectId(project.getId());
+            if(tagList == null) {
+                tagList = new ArrayList<>();
+            }
             projectTags.put(project.getId(), tagList);
         }
         model.addAttribute("projectList", projectList);
