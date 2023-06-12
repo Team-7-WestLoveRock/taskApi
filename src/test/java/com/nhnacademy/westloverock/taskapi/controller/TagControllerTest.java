@@ -20,9 +20,10 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.*;
 @ExtendWith(MockitoExtension.class)
-public class TagControllerTest {
+class TagControllerTest {
 
     @Mock
     private TagService tagService;
@@ -38,7 +39,7 @@ public class TagControllerTest {
     }
 
     @Test
-    public void createTagTest() throws Exception {
+    void createTagTest() throws Exception {
         given(tagService.createTag(anyInt(), any(TagDto.class))).willReturn(new TagDto());
 
         mockMvc.perform(post("/project/api/tags/1")
@@ -48,26 +49,30 @@ public class TagControllerTest {
     }
 
     @Test
-    public void findAllTagsTest() throws Exception {
+    void findAllTagsTest() throws Exception {
         List<TagDto> tagDtoList = Arrays.asList(new TagDto(), new TagDto());
         given(tagService.findAllTags()).willReturn(tagDtoList);
 
         mockMvc.perform(get("/project/api/tags")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
-    public void findTagByIdTest() throws Exception {
-        given(tagService.findTagById(anyInt())).willReturn(new TagDto());
+    void findTagByIdTest() throws Exception {
+        TagDto tagDto = new TagDto();
+        tagDto.setId(1);
+        given(tagService.findTagById(anyInt())).willReturn(tagDto);
 
         mockMvc.perform(get("/project/api/tags/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)));
     }
 
     @Test
-    public void updateTagTest() throws Exception {
+    void updateTagTest() throws Exception {
         mockMvc.perform(put("/project/api/tags/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
@@ -75,7 +80,7 @@ public class TagControllerTest {
     }
 
     @Test
-    public void deleteTagTest() throws Exception {
+    void deleteTagTest() throws Exception {
         mockMvc.perform(delete("/project/api/tags/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

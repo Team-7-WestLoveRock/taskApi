@@ -6,7 +6,6 @@ import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.repository.TagRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -19,8 +18,6 @@ public class TagService {
 
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
-    ModelMapper modelMapper = new ModelMapper();
-
 
     public TagService(TagRepository tagRepository, ProjectRepository projectRepository) {
         this.tagRepository = tagRepository;
@@ -33,12 +30,9 @@ public class TagService {
             throw new IllegalArgumentException("태그는 이름과 색상이 필요합니다.");
         }
 
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
-        if(projectOptional.isEmpty()) {
-            throw new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다.");
-        }
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다."));
 
-        Project project = projectOptional.get();
         Tag tag = new Tag(tagDto.getName(), tagDto.getColor(), project);
         Tag savedTag = tagRepository.save(tag);
 
@@ -69,17 +63,18 @@ public class TagService {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));
 
-        if (newTagData.getName() != null && !newTagData.getName().isEmpty()) {
-            tag.update(newTagData.getName(), newTagData.getColor());
+        if (newTagData.getName() == null || newTagData.getName().isEmpty()) {
+            throw new IllegalArgumentException("태그 이름은 비어 있을 수 없습니다.");
         }
 
+        tag.update(newTagData.getName(), newTagData.getColor());
         tagRepository.save(tag);
     }
 
     public List<TagDto> findByProjectId(int projectId) {
         List<Tag> tags = tagRepository.findByProjectId(projectId);
         return tags.stream()
-                .map(tag -> modelMapper.map(tag, TagDto.class))
+                .map(Tag::toDto)
                 .collect(Collectors.toList());
     }
 }
