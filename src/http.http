@@ -37,13 +37,13 @@ Content-Type: application/json
 GET localhost:1998/project/api/tags HTTP/1.1
 
 ###
-GET localhost:1998/project/api/tags/1 HTTP/1.1
+GET localhost:1998/project/api/tags/8 HTTP/1.1
 
 ###
 DELETE localhost:1998/project/api/tags/1 HTTP/1.1
 
 ###
-PUT localhost:1998/project/api/tags/1 HTTP/1.1
+PUT localhost:1998/project/api/tags/8 HTTP/1.1
 Content-Type: application/json
 
 {

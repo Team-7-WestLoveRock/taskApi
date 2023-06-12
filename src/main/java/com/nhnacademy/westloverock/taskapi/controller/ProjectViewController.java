@@ -2,27 +2,44 @@ package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
+import com.nhnacademy.westloverock.taskapi.dto.TagDto;
+import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
+import com.nhnacademy.westloverock.taskapi.service.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/project")
 public class ProjectViewController {
 
     private final ProjectService projectService;
+    private final TagService tagService;
 
-    public ProjectViewController(ProjectService projectService) {
+    public ProjectViewController(ProjectService projectService, TagService tagService) {
         this.projectService = projectService;
+        this.tagService = tagService;
     }
 
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
+        Map<Integer, List<TagDto>> projectTags = new HashMap<>();
+        for (ProjectDto project : projectList) {
+            List<TagDto> tagList = tagService.findByProjectId(project.getId());
+            if(tagList == null) {
+                tagList = new ArrayList<>();
+            }
+            projectTags.put(project.getId(), tagList);
+        }
         model.addAttribute("projectList", projectList);
+        model.addAttribute("projectTags", projectTags);
         return "project_list";
     }
 
@@ -31,7 +48,10 @@ public class ProjectViewController {
         try {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
+            List<TagDto> tagList = tagService.findByProjectId(projectId);
             model.addAttribute("project", projectDto);
+            model.addAttribute("tags", tagList);
+            model.addAttribute("newTag", new TagDto());
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";
@@ -62,7 +82,7 @@ public class ProjectViewController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public String updateProject(@PathVariable String id, @ModelAttribute("project") ProjectUpdateRequest projectUpdateRequest) {
         try {
             int projectId = Integer.parseInt(id);
@@ -73,12 +93,68 @@ public class ProjectViewController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteProject(@PathVariable String id) {
         try {
             int projectId = Integer.parseInt(id);
             projectService.deleteProject(projectId);
             return "redirect:/project";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/tag")
+    public String createTag(@PathVariable String projectId, @ModelAttribute("tag") TagDto tagDto) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            tagDto.setProjectId(projectIdInt);
+            tagService.createTag(projectIdInt, tagDto);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @GetMapping("/{id}/tag/new")
+    public String newTagForm(@PathVariable String id, Model model) {
+        try {
+            int projectId = Integer.parseInt(id);
+            model.addAttribute("tag", new TagDto());
+            model.addAttribute("projectId", projectId);
+            return "tag_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @GetMapping("/{projectId}/tag/{tagId}/edit")
+    public String editTagForm(@PathVariable String projectId, @PathVariable String tagId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int tagIdInt = Integer.parseInt(tagId);
+            TagDto tagDto = tagService.findTagById(tagIdInt);
+            model.addAttribute("tag", tagDto);
+            model.addAttribute("projectId", projectIdInt);
+            return "tag_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/tag/{tagId}")
+    public String updateTag(@PathVariable String projectId, @PathVariable String tagId, @ModelAttribute("tag") TagUpdateRequest tagUpdateRequest) {
+        try {
+            int tagIdInt = Integer.parseInt(tagId);
+            tagService.updateTag(tagIdInt, tagUpdateRequest);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/tag/{tagId}/delete")
+    public String deleteTag(@PathVariable String projectId, @PathVariable String tagId) {
+        try {
+            int tagIdInt = Integer.parseInt(tagId);
+            tagService.deleteTag(tagIdInt);
+            return "redirect:/project/" + projectId;
         } catch (NumberFormatException e) {
             return "error";
         }

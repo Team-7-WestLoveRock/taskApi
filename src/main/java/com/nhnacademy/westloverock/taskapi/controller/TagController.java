@@ -3,11 +3,11 @@ package com.nhnacademy.westloverock.taskapi.controller;
 import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/project/api/tags")
@@ -21,8 +21,12 @@ public class TagController {
 
     @PostMapping("/{projectId}")
     public ResponseEntity<TagDto> createTag(@PathVariable int projectId, @RequestBody TagDto tagDto) {
-        TagDto createdTag = tagService.createTag(projectId, tagDto);
-        return ResponseEntity.ok(createdTag);
+        try {
+            TagDto createdTag = tagService.createTag(projectId, tagDto);
+            return new ResponseEntity<>(createdTag, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
@@ -36,9 +40,13 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TagDto> updateTag(@PathVariable int id, @RequestBody TagUpdateRequest newTagData) {
-        TagDto updatedTag = tagService.updateTag(id, newTagData);
-        return ResponseEntity.ok(updatedTag);
+    public ResponseEntity<Void> updateTag(@PathVariable int id, @RequestBody TagUpdateRequest newTagData) {
+        try {
+            tagService.updateTag(id, newTagData);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")

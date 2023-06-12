@@ -16,14 +16,14 @@ public class TagDto {
     private int id;
     private String name;
     private String color;
-    private Project project;
+    private int projectId;
 
     public TagDto toDto() {
         TagDto tag = new TagDto();
         tag.setId(this.id);
         tag.setName(this.name);
         tag.setColor(this.color);
-        tag.setProject(this.project);
+        tag.setProjectId(this.projectId);
         return tag;
     }
 }
