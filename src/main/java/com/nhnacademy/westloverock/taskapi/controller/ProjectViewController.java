@@ -6,6 +6,7 @@ import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/project")
 public class ProjectViewController {
 
     private final ProjectService projectService;
     private final TagService tagService;
-
-    public ProjectViewController(ProjectService projectService, TagService tagService) {
-        this.projectService = projectService;
-        this.tagService = tagService;
-    }
 
     @GetMapping
     public String findAllProjects(Model model) {

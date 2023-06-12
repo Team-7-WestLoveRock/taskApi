@@ -3,6 +3,7 @@ package com.nhnacademy.westloverock.taskapi.controller;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,14 +11,12 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/project/api/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
-
-    public ProjectController(ProjectService projectService) {
-        this.projectService = projectService;
-    }
+    
 
     @PostMapping
     public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {

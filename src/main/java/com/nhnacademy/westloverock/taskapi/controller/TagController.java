@@ -3,6 +3,7 @@ package com.nhnacademy.westloverock.taskapi.controller;
 import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/project/api/tags")
 public class TagController {
 
     private final TagService tagService;
-
-    public TagController(TagService tagService) {
-        this.tagService = tagService;
-    }
 
     @PostMapping("/{projectId}")
     public ResponseEntity<TagDto> createTag(@PathVariable int projectId, @RequestBody TagDto tagDto) {
