@@ -35,10 +35,10 @@ public class ProjectViewController {
         try {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
-            List<TagDto> tagList = tagService.findByProjectId(projectId); // assuming you have such a method in your TagService
+            List<TagDto> tagList = tagService.findByProjectId(projectId);
             model.addAttribute("project", projectDto);
-            model.addAttribute("tags", tagList); // it's 'tags', not 'tag'
-            model.addAttribute("newTag", new TagDto()); // if you want to add a new tag
+            model.addAttribute("tags", tagList);
+            model.addAttribute("newTag", new TagDto());
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";

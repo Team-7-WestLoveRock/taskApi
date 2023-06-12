@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/project/api/tags")
@@ -41,9 +40,13 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TagDto> updateTag(@PathVariable int id, @RequestBody TagUpdateRequest newTagData) {
-        TagDto updatedTag = tagService.updateTag(id, newTagData);
-        return ResponseEntity.ok(updatedTag);
+    public ResponseEntity<Void> updateTag(@PathVariable int id, @RequestBody TagUpdateRequest newTagData) {
+        try {
+            tagService.updateTag(id, newTagData);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")

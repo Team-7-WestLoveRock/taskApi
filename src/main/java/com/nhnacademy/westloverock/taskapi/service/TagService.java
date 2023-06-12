@@ -42,10 +42,10 @@ public class TagService {
         Tag tag = new Tag(tagDto.getName(), tagDto.getColor(), project);
         Tag savedTag = tagRepository.save(tag);
 
-        tagDto.setId(savedTag.getId());  // Add the generated id back into the DTO
-        tagDto.setProjectId(project.getId()); // Update the projectId in the DTO
+        tagDto.setId(savedTag.getId());
+        tagDto.setProjectId(project.getId());
 
-        return tagDto;  // Return the updated DTO
+        return tagDto;
     }
 
     public List<TagDto> findAllTags() {
@@ -64,13 +64,16 @@ public class TagService {
         tagRepository.deleteById(id);
     }
 
-    public TagDto updateTag(int id, TagUpdateRequest newTagData) {
+
+    public void updateTag(int id, TagUpdateRequest newTagData) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));
-        tag.update(newTagData.getName(), newTagData.getColor(), newTagData.getProject());
 
-        Tag updatedTag = tagRepository.save(tag);
-        return updatedTag.toDto();
+        if (newTagData.getName() != null && !newTagData.getName().isEmpty()) {
+            tag.update(newTagData.getName(), newTagData.getColor());
+        }
+
+        tagRepository.save(tag);
     }
 
     public List<TagDto> findByProjectId(int projectId) {

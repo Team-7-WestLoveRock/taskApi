@@ -1,6 +1,5 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
-import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import lombok.*;
 
@@ -9,7 +8,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -44,9 +42,12 @@ public class Tag {
         return dto;
     }
 
-    public void update(String name, String color, Project project) {
-        this.name = name;
-        this.color = color;
-        this.project = project;
+    public void update(String name, String color) {
+        if (name != null && !name.isEmpty()) {
+            this.name = name;
+        }
+        if (color != null && !color.isEmpty()) {
+            this.color = color;
+        }
     }
 }
