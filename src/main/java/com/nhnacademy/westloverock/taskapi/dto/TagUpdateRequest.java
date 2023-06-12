@@ -11,13 +11,11 @@ import lombok.*;
 public class TagUpdateRequest {
     private String name;
     private String color;
-    private Project project;
 
     public TagUpdateRequest toDto() {
         TagUpdateRequest dto = new TagUpdateRequest();
         dto.setName(this.name);
         dto.setColor(this.color);
-        dto.setProject(this.project);
         return dto;
     }
 }

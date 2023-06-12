@@ -6,21 +6,28 @@
 </head>
 <body>
 <br><br>
-
 <div class="container">
-  <form th:action="@{/project/{id}(id=${project.id})}" th:object="${project}" method="post">
-    <input type="hidden" name="_method" value="put" />
+  <form th:action="@{'/project/' + ${project.id}}" method="post">
     <h1>프로젝트 편집</h1>
     <div class="form-group">
       <label for="name">프로젝트명</label>
-      <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="3~30자 (영어,한국어,일본어,중국어,숫자,특수 기호().-~)">
+      <input type="text" id="name" name="name" th:value="${project.name}" class="form-control" placeholder="3~30자 (영어,한국어,일본어,중국어,숫자,특수 기호().-~)">
     </div>
     <div class="form-group">
       <label for="description">설명</label>
-      <textarea id="description" th:field="*{description}" class="form-control"></textarea>
+      <textarea id="description" name="description" class="form-control" th:text="${project.description}"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="state">상태</label><br>
+      <input type="radio" id="status-1" name="state" value="보관" th:checked="${project.state == '보관'}">
+      <label for="state-1">보관</label>
+      <input type="radio" id="status-2" name="state" value="진행" th:checked="${project.state == '진행'}">
+      <label for="state-2">진행</label>
     </div>
     <button type="submit" class="btn btn-primary">수정</button>
   </form>
 </div>
+<a href="/project">전체 프로젝트 리스트</a>
+
 </body>
 </html>

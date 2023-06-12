@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create Tag</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>Create Tag</h1>
+  <form th:action="@{'/project/' + ${projectId} + '/tag'}" th:object="${tag}" method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" th:field="*{name}" class="form-control" id="name">
+    </div>
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input type="text" th:field="*{color}" class="form-control" id="color">
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+</body>
+</html>

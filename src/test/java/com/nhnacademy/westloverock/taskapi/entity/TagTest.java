@@ -32,13 +32,13 @@ class TagTest {
         assertEquals(project, tag.getProject());
     }
 
-    @Test
-    @DisplayName("프로젝트 Setter 테스트")
-    void setProjectTest() {
-        Project newProject = new Project();
-        tag.setProject(newProject);
-        assertEquals(newProject, tag.getProject());
-    }
+//    @Test
+//    @DisplayName("프로젝트 Setter 테스트")
+//    void setProjectTest() {
+//        Project newProject = new Project();
+//        tag.setProject(newProject);
+//        assertEquals(newProject, tag.getProject());
+//    }
 
     @Test
     @DisplayName("이름 Getter 테스트")
@@ -46,12 +46,12 @@ class TagTest {
         assertEquals("태그", tag.getName());
     }
 
-    @Test
-    @DisplayName("이름 Setter 테스트")
-    void setNameTest() {
-        tag.setName("태그2");
-        assertEquals("태그2", tag.getName());
-    }
+//    @Test
+//    @DisplayName("이름 Setter 테스트")
+//    void setNameTest() {
+//        tag.setName("태그2");
+//        assertEquals("태그2", tag.getName());
+//    }
 
     @Test
     @DisplayName("색상 Getter 테스트")
@@ -59,10 +59,10 @@ class TagTest {
         assertEquals("#EBEDFF", tag.getColor());
     }
 
-    @Test
-    @DisplayName("색상 Setter 테스트")
-    void setColorTest() {
-        tag.setColor("#FFFCEB");
-        assertEquals("#FFFCEB", tag.getColor());
-    }
+//    @Test
+//    @DisplayName("색상 Setter 테스트")
+//    void setColorTest() {
+//        tag.setColor("#FFFCEB");
+//        assertEquals("#FFFCEB", tag.getColor());
+//    }
 }

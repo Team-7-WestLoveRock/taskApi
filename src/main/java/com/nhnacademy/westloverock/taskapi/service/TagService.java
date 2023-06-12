@@ -19,7 +19,6 @@ public class TagService {
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
 
-
     public TagService(TagRepository tagRepository, ProjectRepository projectRepository) {
         this.tagRepository = tagRepository;
         this.projectRepository = projectRepository;
@@ -31,15 +30,16 @@ public class TagService {
             throw new IllegalArgumentException("태그는 이름과 색상이 필요합니다.");
         }
 
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
-        if(projectOptional.isEmpty()) {
-            throw new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다.");
-        }
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + projectId + "번을 찾을 수 없습니다."));
 
-        Project project = projectOptional.get();
         Tag tag = new Tag(tagDto.getName(), tagDto.getColor(), project);
         Tag savedTag = tagRepository.save(tag);
-        return savedTag.toDto();
+
+        tagDto.setId(savedTag.getId());
+        tagDto.setProjectId(project.getId());
+
+        return tagDto;
     }
 
     public List<TagDto> findAllTags() {
@@ -58,13 +58,23 @@ public class TagService {
         tagRepository.deleteById(id);
     }
 
-    public TagDto updateTag(int id, TagUpdateRequest newTagData) {
+
+    public void updateTag(int id, TagUpdateRequest newTagData) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));
-        tag.update(newTagData.getName(), newTagData.getColor(), newTagData.getProject());
 
-        Tag updatedTag = tagRepository.save(tag);
-        return updatedTag.toDto();
+        if (newTagData.getName() == null || newTagData.getName().isEmpty()) {
+            throw new IllegalArgumentException("태그 이름은 비어 있을 수 없습니다.");
+        }
+
+        tag.update(newTagData.getName(), newTagData.getColor());
+        tagRepository.save(tag);
     }
 
+    public List<TagDto> findByProjectId(int projectId) {
+        List<Tag> tags = tagRepository.findByProjectId(projectId);
+        return tags.stream()
+                .map(Tag::toDto)
+                .collect(Collectors.toList());
+    }
 }
