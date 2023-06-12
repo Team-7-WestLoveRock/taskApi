@@ -6,7 +6,6 @@ import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.repository.TagRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -19,8 +18,6 @@ public class TagService {
 
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
-    ModelMapper modelMapper = new ModelMapper();
-
 
     public TagService(TagRepository tagRepository, ProjectRepository projectRepository) {
         this.tagRepository = tagRepository;
@@ -79,7 +76,8 @@ public class TagService {
     public List<TagDto> findByProjectId(int projectId) {
         List<Tag> tags = tagRepository.findByProjectId(projectId);
         return tags.stream()
-                .map(tag -> modelMapper.map(tag, TagDto.class))
+                .map(Tag::toDto)
                 .collect(Collectors.toList());
     }
+
 }
