@@ -1,5 +1,6 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
+import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Milestone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
@@ -30,4 +31,10 @@ public class Milestone {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+
+    public void modifyMilestone(UpdateMilestoneRequest updateMilestoneRequest) {
+        this.name = updateMilestoneRequest.getName();
+        this.startDate = updateMilestoneRequest.getStartDate();
+        this.endDate = updateMilestoneRequest.getEndDate();
+    }
 }

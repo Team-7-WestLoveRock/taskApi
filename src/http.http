@@ -50,3 +50,27 @@ Content-Type: application/json
   "name": "tag2",
   "color": "red"
 }
+
+###
+GET localhost:1998/project/api/projects/1/milestones
+
+###
+
+POST localhost:1998/project/api/projects/1/milestone
+Content-Type: application/json
+
+{
+  "name": "두레이 이해하기",
+  "startDate": "2023-06-06",
+  "endDate": "2023-06-10"
+}
+
+###
+PUT localhost:1998/project/api/projects/1/milestone/3
+Content-Type: application/json
+
+{
+    "name": "두레이 이해하기",
+    "startDate": "2023-06-06",
+    "endDate": "2023-06-25"
+}
