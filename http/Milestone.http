@@ -14,11 +14,11 @@ Content-Type: application/json
 
 ###
 
-PUT localhost:1998/project/api/projects/1/milestone/1
+PUT localhost:1998/project/api/projects/1/milestone/2
 Content-Type: application/json
 
 {
-    "name": "두레이 이해하기2",
+    "name": "두레이 이해하기1",
     "startDate": "2023-06-06",
     "endDate": "2023-06-25"
 }

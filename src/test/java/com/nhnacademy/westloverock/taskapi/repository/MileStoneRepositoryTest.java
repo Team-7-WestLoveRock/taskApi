@@ -80,7 +80,7 @@ class MileStoneRepositoryTest {
         testEntityManager.flush();
         testEntityManager.clear();
 
-        assertThat(mileStoneRepository.findById(milestone.getId()).get()).isEqualTo(milestone);
+        assertThat(mileStoneRepository.findById(milestone.getId())).contains(milestone);
     }
 
     @Test
@@ -142,7 +142,7 @@ class MileStoneRepositoryTest {
         testEntityManager.flush();
         testEntityManager.clear();
 
-        mileStoneRepository.delete(milestone);
+        mileStoneRepository.deleteById(milestone.getId());
 
         assertThat(mileStoneRepository.findById(milestone.getId())).isNotPresent();
     }
@@ -199,7 +199,7 @@ class MileStoneRepositoryTest {
         testEntityManager.persist(milestone1);
 
         assertThat(mileStoneRepository
-                .findMilestoneByProject_IdAndId(project.getId(), milestone1.getId()).get())
-                .isEqualTo(milestone1);
+                .findMilestoneByProject_IdAndId(project.getId(), milestone1.getId()))
+                .contains(milestone1);
     }
 }

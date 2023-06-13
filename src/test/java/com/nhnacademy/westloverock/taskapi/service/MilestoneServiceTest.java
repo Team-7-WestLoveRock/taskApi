@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,12 +21,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.setMaxLengthForSingleLineDescription;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MilestoneServiceTest {
@@ -88,10 +85,17 @@ class MilestoneServiceTest {
 
         when(projectRepository.findProjectById(any())).thenReturn(Optional.empty());
 
+        CreateMilestoneRequest createMilestoneRequest = CreateMilestoneRequest.builder()
+                .name("aaa")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
+                .build();
+
         assertThrows(NoSuchElementException.class, () ->
-                milestoneService.createMilestone(1, new CreateMilestoneRequest()));
+                milestoneService.createMilestone(1, createMilestoneRequest));
 
     }
+
     @Test
     @DisplayName("마일스톤 수정 - 정상")
     void updateMilestone() {
@@ -131,41 +135,20 @@ class MilestoneServiceTest {
         when(mileStoneRepository.findMilestoneByProject_IdAndId(any(), any()))
                 .thenReturn(Optional.empty());
 
+        UpdateMilestoneRequest updateMilestoneRequest = UpdateMilestoneRequest.builder()
+                .name("qqq")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
+                .build();
+
         assertThrows(NoSuchElementException.class, () ->
-                milestoneService.updateMilestone(1, 1, new UpdateMilestoneRequest()));
+                milestoneService.updateMilestone(1, 1, updateMilestoneRequest));
     }
 
     @Test
     @DisplayName("마일스톤 삭제 - 성공")
     void deleteMilestone() {
-        Project project = Project.builder()
-                .name("project")
-                .description("project")
-                .state("종료")
-                .createAt(LocalDateTime.now())
-                .build();
-
-        Milestone milestone = Milestone.builder()
-                .project(project)
-                .name("milestone")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now())
-                .build();
-
-        when(mileStoneRepository.findMilestoneByProject_IdAndId(any(), any())).thenReturn(Optional.of(milestone));
-
-        milestoneService.deleteMilestone(project.getId(), milestone.getId());
-
-        assertThat(mileStoneRepository.findById(milestone.getId())).isNotPresent();
-    }
-
-    @Test
-    @DisplayName("마일스톤 삭제 - 실패")
-    void deleteMilestoneNoSuchElement() {
-
-        when(mileStoneRepository.findMilestoneByProject_IdAndId(any(), any())).thenReturn(Optional.empty());
-
-        assertThrows(NoSuchElementException.class, () ->
-                milestoneService.deleteMilestone(1, 1));
+        milestoneService.deleteMilestone(1);
+        verify(mileStoneRepository, times(1)).deleteById(anyInt());
     }
 }

@@ -1,8 +1,9 @@
 package com.nhnacademy.westloverock.taskapi.dto;
 
-import com.sun.istack.NotNull;
+
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter

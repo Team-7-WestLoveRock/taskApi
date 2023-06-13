@@ -49,11 +49,10 @@ public class MilestoneController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{projectId}/milestone/{milestoneId}")
-    public HttpEntity<Void> deleteMilestone(@PathVariable(value = "projectId") Integer projectId,
-                                            @PathVariable(value = "milestoneId") Integer milestoneId) {
-        milestoneService.deleteMilestone(projectId, milestoneId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("/milestone/{milestoneId}")
+    public HttpEntity<Void> deleteMilestone(@PathVariable(value = "milestoneId") Integer milestoneId) {
+        milestoneService.deleteMilestone(milestoneId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

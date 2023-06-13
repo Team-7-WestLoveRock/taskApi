@@ -101,10 +101,10 @@ class MilestoneControllerTest {
 
     @Test
     void deleteMilestone() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/project/api/projects/1/milestone/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/project/api/projects/milestone/1")
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 }
