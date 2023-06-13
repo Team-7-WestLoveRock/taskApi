@@ -1,16 +1,16 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
-import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
-import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
-import com.nhnacademy.westloverock.taskapi.dto.TagDto;
-import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
+import com.nhnacademy.westloverock.taskapi.dto.*;
+import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +23,7 @@ public class ProjectViewController {
 
     private final ProjectService projectService;
     private final TagService tagService;
+    private final MilestoneService milestoneService;
 
     @GetMapping
     public String findAllProjects(Model model) {
@@ -100,6 +101,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @PostMapping("/{projectId}/tag")
     public String createTag(@PathVariable String projectId, @ModelAttribute("tag") TagDto tagDto) {
         try {
@@ -111,6 +113,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @GetMapping("/{id}/tag/new")
     public String newTagForm(@PathVariable String id, Model model) {
         try {
@@ -122,6 +125,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @GetMapping("/{projectId}/tag/{tagId}/edit")
     public String editTagForm(@PathVariable String projectId, @PathVariable String tagId, Model model) {
         try {
@@ -156,4 +160,37 @@ public class ProjectViewController {
             return "error";
         }
     }
+
+    @GetMapping("/{id}/milestone/new")
+    public String newMilestoneForm(@PathVariable String id, Model model) {
+        try {
+            int projectId = Integer.parseInt(id);
+            ProjectDto projectDto = projectService.findProjectById(projectId);
+            model.addAttribute("milestone", new CreateMilestoneRequest());
+            model.addAttribute("projectId", projectId);
+            model.addAttribute("project", projectDto);
+            return "milestone_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/milestone")
+    public String createMilestone(@PathVariable("projectId") String projectId,
+                                  @ModelAttribute("milestone") @Valid CreateMilestoneRequest createMilestoneRequest,
+                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "error";
+        }
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            milestoneService.createMilestone(projectIdInt, createMilestoneRequest);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
 }
