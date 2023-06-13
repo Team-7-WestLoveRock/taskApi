@@ -1,5 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
+import com.nhnacademy.westloverock.taskapi.dto.MilestoneResponseDto;
+import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
 import lombok.*;
 
@@ -38,5 +40,14 @@ public class Milestone {
         this.name = updateMilestoneRequest.getName();
         this.startDate = updateMilestoneRequest.getStartDate();
         this.endDate = updateMilestoneRequest.getEndDate();
+    }
+    public MilestoneResponseDto toDto() {
+        MilestoneResponseDto dto = new MilestoneResponseDto();
+        dto.setId(this.id);
+        dto.setName(this.name);
+        dto.setStartDate(this.startDate);
+        dto.setEndDate(this.endDate);
+        dto.setProjectId(this.project.getId());
+        return dto;
     }
 }

@@ -5,6 +5,7 @@ import com.nhnacademy.westloverock.taskapi.dto.MilestoneResponseDto;
 import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Milestone;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
+import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.repository.MileStoneRepository;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +55,12 @@ public class MilestoneService {
 
     public void deleteMilestone(Integer milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
+    }
+
+    public List<MilestoneResponseDto> findByProjectId(int projectId) {
+        List<Milestone> milestones = mileStoneRepository.findByProjectId(projectId);
+        return milestones.stream()
+                .map(Milestone::toDto)
+                .collect(Collectors.toList());
     }
 }
