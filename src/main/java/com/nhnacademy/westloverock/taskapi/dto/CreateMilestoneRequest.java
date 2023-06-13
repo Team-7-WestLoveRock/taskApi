@@ -16,6 +16,5 @@ public class CreateMilestoneRequest {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int projectId;
 
 }
