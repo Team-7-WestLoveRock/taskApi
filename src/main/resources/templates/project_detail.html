@@ -44,10 +44,12 @@
             <form th:action="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/delete'}" th:method="post" style="display: inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
-
         </li>
     </ul>
+
     <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>
+    <a th:href="@{'/project/' + ${project.id} + '/milestone/new'}" class="btn btn-primary">Create MileStone</a>
+
 </div>
 </body>
 </html>
