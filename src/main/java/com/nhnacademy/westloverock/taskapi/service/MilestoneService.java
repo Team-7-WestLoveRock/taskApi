@@ -9,23 +9,28 @@ import com.nhnacademy.westloverock.taskapi.repository.MileStoneRepository;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MilestoneService {
     private final MileStoneRepository mileStoneRepository;
     private final ProjectRepository projectRepository;
 
     public List<MilestoneResponseDto> findAllMilestone(Integer projectId) {
-        List<MilestoneResponseDto> milestoneResponseDtoList = mileStoneRepository.findAllByProject_Id(projectId);
-        return milestoneResponseDtoList;
+        return mileStoneRepository.findAllByProject_Id(projectId);
     }
 
+    @Transactional
     public void createMilestone(Integer projectId, CreateMilestoneRequest createMilestoneRequest) {
-        Project project = projectRepository.findProjectById(projectId).orElseThrow(() -> new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
+        Project project = projectRepository
+                .findProjectById(projectId)
+                .orElseThrow(() ->
+                        new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
         Milestone milestone = Milestone.builder()
                 .project(project)
                 .name(createMilestoneRequest.getName())
@@ -35,8 +40,8 @@ public class MilestoneService {
         mileStoneRepository.save(milestone);
     }
 
+    @Transactional
     public void updateMilestone(Integer projectId, Integer milestoneId, UpdateMilestoneRequest updateMilestoneRequest) {
-//        Project project = projectRepository.findProjectById(projectId).orElseThrow(() -> new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
         Milestone milestone = mileStoneRepository
                 .findMilestoneByProject_IdAndId(projectId, milestoneId)
                 .orElseThrow(() ->
@@ -44,6 +49,9 @@ public class MilestoneService {
 
         milestone.modifyMilestone(updateMilestoneRequest);
 
-        mileStoneRepository.save(milestone);
+    }
+
+    public void deleteMilestone(Integer milestoneId) {
+        mileStoneRepository.deleteById(milestoneId);
     }
 }

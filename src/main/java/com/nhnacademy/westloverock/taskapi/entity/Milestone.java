@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Table(name = "Milestones")
+@Generated
+@EqualsAndHashCode
 public class Milestone {
 
     @Id
