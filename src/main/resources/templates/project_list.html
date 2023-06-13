@@ -25,6 +25,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Tags</th>
+      <th>Milestones</th> <!-- Milestone column added -->
       <th>Actions</th>
     </tr>
     </thead>
@@ -39,6 +40,13 @@
                 <span th:each="tag : ${projectTags[__${project.id}__]}">
                     <div class="color-box" th:style="'background-color:' + ${tag.color}"></div>
                     <span th:text="${tag.name}"></span>
+                </span>
+      </td>
+      <td> <!-- Milestone data added -->
+        <span th:each="milestone : ${projectMilestones[__${project.id}__]}">
+                    <span th:text="${milestone.name}"></span>
+                    <span th:text="${milestone.startDate}"></span>
+                    <span th:text="${milestone.endDate}"></span>
                 </span>
       </td>
       <td>
