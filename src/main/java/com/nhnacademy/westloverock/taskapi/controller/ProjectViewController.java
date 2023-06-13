@@ -29,17 +29,27 @@ public class ProjectViewController {
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
         Map<Integer, List<TagDto>> projectTags = new HashMap<>();
+        Map<Integer, List<MilestoneResponseDto>> projectMilestones = new HashMap<>();
+
         for (ProjectDto project : projectList) {
             List<TagDto> tagList = tagService.findByProjectId(project.getId());
+            List<MilestoneResponseDto> milestoneList = milestoneService.findByProjectId(project.getId());
+
             if(tagList == null) {
                 tagList = new ArrayList<>();
             }
+
             projectTags.put(project.getId(), tagList);
+            projectMilestones.put(project.getId(), milestoneList);
         }
+
         model.addAttribute("projectList", projectList);
         model.addAttribute("projectTags", projectTags);
+        model.addAttribute("projectMilestones", projectMilestones);
+
         return "project_list";
     }
+
 
     @GetMapping("/{id}")
     public String findProjectById(@PathVariable String id, Model model) {
@@ -47,14 +57,20 @@ public class ProjectViewController {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
             List<TagDto> tagList = tagService.findByProjectId(projectId);
+            List<MilestoneResponseDto> milestoneList = milestoneService.findByProjectId(projectId);
+
             model.addAttribute("project", projectDto);
             model.addAttribute("tags", tagList);
+            model.addAttribute("milestones", milestoneList);
             model.addAttribute("newTag", new TagDto());
+
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";
         }
     }
+
+
 
     @GetMapping("/new")
     public String newProjectForm(Model model) {
