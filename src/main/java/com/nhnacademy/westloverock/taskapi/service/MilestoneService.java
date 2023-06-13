@@ -20,12 +20,14 @@ public class MilestoneService {
     private final ProjectRepository projectRepository;
 
     public List<MilestoneResponseDto> findAllMilestone(Integer projectId) {
-        List<MilestoneResponseDto> milestoneResponseDtoList = mileStoneRepository.findAllByProject_Id(projectId);
-        return milestoneResponseDtoList;
+        return mileStoneRepository.findAllByProject_Id(projectId);
     }
 
     public void createMilestone(Integer projectId, CreateMilestoneRequest createMilestoneRequest) {
-        Project project = projectRepository.findProjectById(projectId).orElseThrow(() -> new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
+        Project project = projectRepository
+                .findProjectById(projectId)
+                .orElseThrow(() ->
+                        new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
         Milestone milestone = Milestone.builder()
                 .project(project)
                 .name(createMilestoneRequest.getName())
@@ -36,7 +38,6 @@ public class MilestoneService {
     }
 
     public void updateMilestone(Integer projectId, Integer milestoneId, UpdateMilestoneRequest updateMilestoneRequest) {
-//        Project project = projectRepository.findProjectById(projectId).orElseThrow(() -> new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
         Milestone milestone = mileStoneRepository
                 .findMilestoneByProject_IdAndId(projectId, milestoneId)
                 .orElseThrow(() ->
@@ -45,5 +46,14 @@ public class MilestoneService {
         milestone.modifyMilestone(updateMilestoneRequest);
 
         mileStoneRepository.save(milestone);
+    }
+
+    public void deleteMilestone(Integer projectId, Integer milestoneId) {
+        Milestone milestone = mileStoneRepository
+                .findMilestoneByProject_IdAndId(projectId, milestoneId)
+                .orElseThrow(() ->
+                        new NoSuchElementException("해당하는 프로젝트id와 milestoneId와 일치하는 milestone이 없습니다."));
+
+        mileStoneRepository.delete(milestone);
     }
 }

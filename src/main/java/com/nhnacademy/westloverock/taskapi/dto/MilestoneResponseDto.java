@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Generated
 public class MilestoneResponseDto {
     private String name;

@@ -4,12 +4,11 @@ import com.nhnacademy.westloverock.taskapi.dto.CreateMilestoneRequest;
 import com.nhnacademy.westloverock.taskapi.dto.MilestoneResponseDto;
 import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
 import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,12 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/project/api/projects")
+@RequiredArgsConstructor
 public class MilestoneController {
     private final MilestoneService milestoneService;
-
-    public MilestoneController(MilestoneService milestoneService) {
-        this.milestoneService = milestoneService;
-    }
 
     @GetMapping("/{projectId}/milestones")
     public HttpEntity<List<MilestoneResponseDto>> findAllMilestone(@PathVariable Integer projectId) {
@@ -50,6 +46,13 @@ public class MilestoneController {
 
         milestoneService.updateMilestone(projectId, milestoneId, updateMilestoneRequest);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{projectId}/milestone/{milestoneId}")
+    public HttpEntity<Void> deleteMilestone(@PathVariable(value = "projectId") Integer projectId,
+                                            @PathVariable(value = "milestoneId") Integer milestoneId) {
+        milestoneService.deleteMilestone(projectId, milestoneId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

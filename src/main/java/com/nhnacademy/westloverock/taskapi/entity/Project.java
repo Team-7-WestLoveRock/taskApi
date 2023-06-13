@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Projects")
+@EqualsAndHashCode(of = {"id"})
 public class Project {
 
     @Id
