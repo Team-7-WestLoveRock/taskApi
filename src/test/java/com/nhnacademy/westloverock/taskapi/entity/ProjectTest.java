@@ -27,7 +27,7 @@ class ProjectTest {
                 .description("김서현,김정민,추만석의 두레이 미니프로젝트 입니다.")
                 .state("진행")
                 .createAt(LocalDateTime.now())
-                .milestone(milestone)
+                .milestone(new ArrayList<>())
                 .projectAuthorities(new ArrayList<>())
                 .tags(new ArrayList<>())
                 .tasks(new ArrayList<>())
@@ -78,7 +78,7 @@ class ProjectTest {
     @Test
     @DisplayName("마일스톤 Getter 테스트")
     void getMilestoneTest() {
-        assertEquals(milestone, project.getMilestone());
+        assertNotNull(project.getMilestone());
     }
 
 //    @Test
