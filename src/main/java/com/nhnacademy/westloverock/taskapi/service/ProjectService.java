@@ -6,6 +6,7 @@ import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -14,10 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly=true)
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-
+    @Transactional
     public ProjectDto createProject(ProjectDto projectDto) {
         if (StringUtils.isEmpty(projectDto.getName()) || StringUtils.isEmpty(projectDto.getDescription())) {
             throw new IllegalArgumentException("프로젝트는 이름과 설명이 필요합니다.");
@@ -39,11 +41,11 @@ public class ProjectService {
                 .map(Project::toDto)
                 .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));
     }
-
+    @Transactional
     public void deleteProject(int id) {
         projectRepository.deleteById(id);
     }
-
+    @Transactional
     public void updateProject(int id, ProjectUpdateRequest newProjectData) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("프로젝트 id : " + id + "번을 찾을 수 없습니다."));

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly=true)
 public class TagService {
 
     private final TagRepository tagRepository;
@@ -50,12 +51,12 @@ public class TagService {
                 .map(Tag::toDto)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));
     }
-
+    @Transactional
     public void deleteTag(int id) {
         tagRepository.deleteById(id);
     }
 
-
+    @Transactional
     public void updateTag(int id, TagUpdateRequest newTagData) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("태그 id : " + id + "번을 찾을 수 없습니다."));

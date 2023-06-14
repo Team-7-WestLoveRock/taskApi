@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Task Detail</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="my-4">Task Detail</h1>
+  <table class="table table-bordered">
+    <tbody>
+    <tr>
+      <td><b>Title</b></td>
+      <td th:text="${task.title}"></td>
+    </tr>
+    <tr>
+      <td><b>Register User Id</b></td>
+      <td th:text="${task.registerUserId}"></td>
+    </tr>
+    <tr>
+      <td><b>Expiration Date</b></td>
+      <td th:text="${task.expirationDate}"></td>
+    </tr>
+    <tr>
+      <td><b>Content</b></td>
+      <td th:text="${task.content}"></td>
+    </tr>
+    <tr>
+      <td><b>Priority</b></td>
+      <td th:text="${task.priority}"></td>
+    </tr>
+    <tr>
+      <td><b>Created At</b></td>
+      <td th:text="${task.createdAt}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <a th:href="@{/project/{projectId}(projectId=${task.projectId})}" class="btn btn-primary">Back to Project</a>
+</div>
+</body>
+</html>
