@@ -37,26 +37,11 @@ class CommentTest {
         assertEquals(task, comment.getTask());
     }
 
-//    @Test
-//    @DisplayName("작업 Setter 테스트")
-//    void setTaskTest() {
-//        Task newTask = new Task();
-//        comment.setTask(newTask);
-//        assertEquals(newTask, comment.getTask());
-//    }
-
     @Test
     @DisplayName("유저Id Getter 테스트")
     void getUserIdTest() {
         assertEquals("seohyun", comment.getUserId());
     }
-
-//    @Test
-//    @DisplayName("유저Id Setter 테스트")
-//    void setUserIdTest() {
-//        comment.setUserId("manseok");
-//        assertEquals("manseok", comment.getUserId());
-//    }
 
     @Test
     @DisplayName("내용 Getter 테스트")
@@ -64,38 +49,15 @@ class CommentTest {
         assertEquals("댓글 테스트", comment.getContent());
     }
 
-//    @Test
-//    @DisplayName("내용 Setter 테스트")
-//    void setContentTest() {
-//        comment.setContent("댓글 테스트 업데이트");
-//        assertEquals("댓글 테스트 업데이트", comment.getContent());
-//    }
-
     @Test
     @DisplayName("작성일 Getter 테스트")
     void getCreatedAtTest() {
         assertNotNull(comment.getCreatedAt());
     }
 
-//    @Test
-//    @DisplayName("작성일 Setter 테스트")
-//    void setCreatedAtTest() {
-//        LocalDateTime newDate = LocalDateTime.now().plusDays(1);
-//        comment.setCreatedAt(newDate);
-//        assertEquals(newDate, comment.getCreatedAt());
-//    }
-
     @Test
     @DisplayName("수정일 Getter 테스트")
     void getUpdatedAtTest() {
         assertNotNull(comment.getUpdatedAt());
     }
-
-//    @Test
-//    @DisplayName("수정일 Setter 테스트")
-//    void setUpdatedAtTest() {
-//        LocalDateTime newDate = LocalDateTime.now().plusDays(1);
-//        comment.setUpdatedAt(newDate);
-//        assertEquals(newDate, comment.getUpdatedAt());
-//    }
 }

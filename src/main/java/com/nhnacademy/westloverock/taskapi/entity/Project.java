@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Projects")
+@EqualsAndHashCode(of = {"id"})
 public class Project {
 
     @Id
@@ -30,9 +31,8 @@ public class Project {
     @Column(name = "create_at", nullable = false)
     private LocalDateTime createAt;
 
-    @ManyToOne
-    @JoinColumn(name = "milestone_id")
-    private Milestone milestone;
+    @OneToMany(mappedBy = "project")
+    private List<Milestone> milestone;
 
     @OneToMany(mappedBy = "project")
     private List<ProjectAuthority> projectAuthorities;

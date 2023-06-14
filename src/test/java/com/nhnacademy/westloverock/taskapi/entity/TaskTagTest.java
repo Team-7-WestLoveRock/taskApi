@@ -36,27 +36,11 @@ class TaskTagTest {
         assertEquals(task, taskTag.getTask());
     }
 
-//    @Test
-//    @DisplayName("작업 Setter 테스트")
-//    void setTaskTest() {
-//        Task newTask = new Task();
-//        taskTag.setTask(newTask);
-//        assertEquals(newTask, taskTag.getTask());
-//    }
-
     @Test
     @DisplayName("태그 Getter 테스트")
     void getTagTest() {
         assertEquals(tag, taskTag.getTag());
     }
-
-//    @Test
-//    @DisplayName("태그 Setter 테스트")
-//    void setTagTest() {
-//        Tag newTag = new Tag();
-//        taskTag.setTag(newTag);
-//        assertEquals(newTag, taskTag.getTag());
-//    }
 
     @Test
     @DisplayName("아이디 Getter 테스트")
@@ -64,11 +48,4 @@ class TaskTagTest {
         assertNotNull(taskTag.getId());
     }
 
-//    @Test
-//    @DisplayName("아이디 Setter 테스트")
-//    void setIdTest() {
-//        TaskTag.Pk newPk = new TaskTag.Pk(2, 2);
-//        taskTag.setId(newPk);
-//        assertEquals(newPk, taskTag.getId());
-//    }
 }

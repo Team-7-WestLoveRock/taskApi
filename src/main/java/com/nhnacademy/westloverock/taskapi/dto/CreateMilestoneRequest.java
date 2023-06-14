@@ -1,20 +1,25 @@
 package com.nhnacademy.westloverock.taskapi.dto;
 
-import com.sun.istack.NotNull;
-import lombok.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Generated
 public class CreateMilestoneRequest {
-    @NotNull
     private String name;
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+    private int projectId;
+
 }

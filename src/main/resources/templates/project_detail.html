@@ -44,10 +44,27 @@
             <form th:action="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/delete'}" th:method="post" style="display: inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
-
         </li>
     </ul>
+
+    <h2>Milestones</h2>
+    <ul>
+        <li th:each="milestone : ${milestones}">
+            마일스톤명: <span th:text="${milestone.name}"></span><br/>
+            시작일: <span th:text="${milestone.startDate}"></span><br/>
+            종료일: <span th:text="${milestone.endDate}"></span><br/>
+
+            <a th:href="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/edit'}" class="btn btn-primary">Edit</a>
+
+            <form th:action="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/delete'}" th:method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </li>
+    </ul>
+
     <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>
+    <a th:href="@{'/project/' + ${project.id} + '/milestone/new'}" class="btn btn-primary">Create MileStone</a>
+
 </div>
 </body>
 </html>
