@@ -1,0 +1,35 @@
+###
+POST localhost:1998/project/api/projects/1/task HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "새 작업",
+    "registerUserId": "사용자1",
+    "expirationDate": "2023-06-20T14:00:00",
+    "content": "새로운 작업 내용",
+    "priority": "중요",
+    "projectId": 1,
+    "milestoneId": 1
+}
+###
+GET localhost:1998/project/api/projects/1/task HTTP/1.1
+
+###
+GET localhost:1998/project/api/tags/114 HTTP/1.1
+
+###
+DELETE localhost:1998/project/api/projects/1/task/3 HTTP/1.1
+
+###
+PUT localhost:1998/project/api/projects/1/task/2 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "수정된 작업",
+  "registerUserId": "사용자1",
+  "expirationDate": "2023-06-21T14:00:00",
+  "content": "수정된 작업 내용",
+  "priority": "중요",
+  "projectId": 1,
+  "milestoneId": 1
+}

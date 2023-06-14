@@ -1,5 +1,8 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
+import com.nhnacademy.westloverock.taskapi.dto.TaskDto;
+import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
+import com.nhnacademy.westloverock.taskapi.service.TaskService;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,4 +46,31 @@ public class Task {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    public void updateTask(TaskDto taskDto) {
+        this.title = taskDto.getTitle();
+        this.registerUserId = taskDto.getRegisterUserId();
+        this.expirationDate = LocalDateTime.now();
+        this.content = taskDto.getContent();
+        this.priority = taskDto.getPriority();
+    }
+    public Task(TaskDto taskDto) {
+        this.title = taskDto.getTitle();
+        this.registerUserId = taskDto.getRegisterUserId();
+        this.expirationDate = taskDto.getExpirationDate();
+        this.content = taskDto.getContent();
+        this.priority = taskDto.getPriority();
+    }
+    public TaskDto toDto() {
+        TaskDto dto = new TaskDto();
+        dto.setId(this.id);
+        dto.setTitle(this.title);
+        dto.setRegisterUserId(this.registerUserId);
+        dto.setExpirationDate(this.expirationDate);
+        dto.setContent(this.content);
+        dto.setPriority(this.priority);
+        dto.setProjectId(this.project.getId());
+        dto.setMilestoneId(this.milestone != null ? this.milestone.getId() : null);
+        dto.setCreatedAt(this.createdAt);
+        return dto;
+    }
 }

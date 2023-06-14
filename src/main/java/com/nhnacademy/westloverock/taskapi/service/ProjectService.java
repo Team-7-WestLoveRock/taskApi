@@ -4,6 +4,7 @@ import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
 import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -12,14 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
-
 
     public ProjectDto createProject(ProjectDto projectDto) {
         if (StringUtils.isEmpty(projectDto.getName()) || StringUtils.isEmpty(projectDto.getDescription())) {

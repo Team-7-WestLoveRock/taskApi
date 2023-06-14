@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ###
 
-PUT localhost:1998/project/api/projects/1/milestone/2
+PUT localhost:1998/project/api/projects/3/milestone/2
 Content-Type: application/json
 
 {
@@ -25,5 +25,5 @@ Content-Type: application/json
 
 ###
 
-DELETE localhost:1998/project/api/projects/1/milestone/1
+DELETE localhost:1998/project/api/projects/milestone/1
 Content-Type: application/json

@@ -6,6 +6,7 @@ import com.nhnacademy.westloverock.taskapi.entity.Project;
 import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.repository.TagRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -14,15 +15,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TagService {
 
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
-
-    public TagService(TagRepository tagRepository, ProjectRepository projectRepository) {
-        this.tagRepository = tagRepository;
-        this.projectRepository = projectRepository;
-    }
 
     @Transactional
     public TagDto createTag(int projectId, TagDto tagDto) {
