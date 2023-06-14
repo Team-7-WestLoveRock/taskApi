@@ -63,4 +63,11 @@ public class TaskService {
                 .map(Task::toDto)
                 .collect(Collectors.toList());
     }
+
+    public TaskDto findTaskByProjectIdAndTaskId(int projectId, int taskId) {
+        Task task = taskRepository.findByProjectIdAndId(projectId, taskId)
+                .orElseThrow(() -> new NoSuchElementException("이 프로젝트에 대한 작업을 찾을 수 없습니다."));
+        return task.toDto();
+    }
+
 }

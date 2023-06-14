@@ -242,5 +242,20 @@ public class ProjectViewController {
         }
     }
 
+    @GetMapping("/{projectId}/task/{taskId}")
+    public String findTaskById(@PathVariable String projectId, @PathVariable String taskId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int taskIdInt = Integer.parseInt(taskId);
+
+            TaskDto taskDto = taskService.findTaskByProjectIdAndTaskId(projectIdInt, taskIdInt);
+
+            model.addAttribute("task", taskDto);
+
+            return "task_detail";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
 
 }
