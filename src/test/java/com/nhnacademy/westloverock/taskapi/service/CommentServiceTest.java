@@ -48,8 +48,7 @@ class CommentServiceTest {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         commentResponseDtoList.add(commentResponseDto);
 
-        when(commentService.findCommentList(anyInt())).thenReturn(commentResponseDtoList);
-
+        when(commentRepository.findAllByTask_Id(anyInt())).thenReturn(commentResponseDtoList);
         assertThat(commentService.findCommentList(anyInt())).hasSize(1);
     }
 
