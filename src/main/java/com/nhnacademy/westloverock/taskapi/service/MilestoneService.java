@@ -52,15 +52,29 @@ public class MilestoneService {
         milestone.modifyMilestone(updateMilestoneRequest);
 
     }
-
+    @Transactional
     public void deleteMilestone(Integer milestoneId) {
         mileStoneRepository.deleteById(milestoneId);
     }
-
+    @Transactional
     public List<MilestoneResponseDto> findByProjectId(int projectId) {
         List<Milestone> milestones = mileStoneRepository.findByProjectId(projectId);
         return milestones.stream()
                 .map(Milestone::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public MilestoneResponseDto findById(Integer id) {
+        Milestone milestone = mileStoneRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 ID를 가진 Milestone이 없습니다."));
+        return MilestoneResponseDto.builder()
+                .id(milestone.getId())
+                .projectId(milestone.getProject().getId())
+                .name(milestone.getName())
+                .startDate(milestone.getStartDate())
+                .endDate(milestone.getEndDate())
+                .build();
+    }
+
 }

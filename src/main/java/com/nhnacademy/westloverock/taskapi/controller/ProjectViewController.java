@@ -203,4 +203,42 @@ public class ProjectViewController {
             return "error";
         }
     }
+    @GetMapping("/{projectId}/milestone/{milestoneId}/edit")
+    public String editMilestoneForm(@PathVariable Integer projectId, @PathVariable Integer milestoneId, Model model) {
+        MilestoneResponseDto milestone = milestoneService.findById(milestoneId);
+        model.addAttribute("milestone", milestone);
+        model.addAttribute("projectId", projectId);
+        return "milestone_edit_form";
+    }
+
+    @PostMapping("/{projectId}/milestone/{milestoneId}")
+    public String updateMilestone(@PathVariable String projectId, @PathVariable String milestoneId, @ModelAttribute("milestone") UpdateMilestoneRequest updateMilestoneRequest) {
+
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int milestoneIdInt = Integer.parseInt(milestoneId);
+            try {
+                milestoneService.updateMilestone(projectIdInt, milestoneIdInt, updateMilestoneRequest);
+                return "redirect:/project/" + projectId;
+            } catch (Exception e) {
+                return "error";
+            }
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
+    @PostMapping("/{projectId}/milestone/{milestoneId}/delete")
+    public String deleteMilestone(@PathVariable String projectId, @PathVariable String milestoneId) {
+        try {
+            int milestoneIdInt = Integer.parseInt(milestoneId);
+            milestoneService.deleteMilestone(milestoneIdInt);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
 }
