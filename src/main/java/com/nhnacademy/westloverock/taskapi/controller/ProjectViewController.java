@@ -1,16 +1,16 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
-import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
-import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
-import com.nhnacademy.westloverock.taskapi.dto.TagDto;
-import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
+import com.nhnacademy.westloverock.taskapi.dto.*;
+import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,22 +23,33 @@ public class ProjectViewController {
 
     private final ProjectService projectService;
     private final TagService tagService;
+    private final MilestoneService milestoneService;
 
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
         Map<Integer, List<TagDto>> projectTags = new HashMap<>();
+        Map<Integer, List<MilestoneResponseDto>> projectMilestones = new HashMap<>();
+
         for (ProjectDto project : projectList) {
             List<TagDto> tagList = tagService.findByProjectId(project.getId());
+            List<MilestoneResponseDto> milestoneList = milestoneService.findByProjectId(project.getId());
+
             if(tagList == null) {
                 tagList = new ArrayList<>();
             }
+
             projectTags.put(project.getId(), tagList);
+            projectMilestones.put(project.getId(), milestoneList);
         }
+
         model.addAttribute("projectList", projectList);
         model.addAttribute("projectTags", projectTags);
+        model.addAttribute("projectMilestones", projectMilestones);
+
         return "project_list";
     }
+
 
     @GetMapping("/{id}")
     public String findProjectById(@PathVariable String id, Model model) {
@@ -46,14 +57,20 @@ public class ProjectViewController {
             int projectId = Integer.parseInt(id);
             ProjectDto projectDto = projectService.findProjectById(projectId);
             List<TagDto> tagList = tagService.findByProjectId(projectId);
+            List<MilestoneResponseDto> milestoneList = milestoneService.findByProjectId(projectId);
+
             model.addAttribute("project", projectDto);
             model.addAttribute("tags", tagList);
+            model.addAttribute("milestones", milestoneList);
             model.addAttribute("newTag", new TagDto());
+
             return "project_detail";
         } catch (NumberFormatException e) {
             return "error";
         }
     }
+
+
 
     @GetMapping("/new")
     public String newProjectForm(Model model) {
@@ -100,6 +117,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @PostMapping("/{projectId}/tag")
     public String createTag(@PathVariable String projectId, @ModelAttribute("tag") TagDto tagDto) {
         try {
@@ -111,6 +129,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @GetMapping("/{id}/tag/new")
     public String newTagForm(@PathVariable String id, Model model) {
         try {
@@ -122,6 +141,7 @@ public class ProjectViewController {
             return "error";
         }
     }
+
     @GetMapping("/{projectId}/tag/{tagId}/edit")
     public String editTagForm(@PathVariable String projectId, @PathVariable String tagId, Model model) {
         try {
@@ -156,4 +176,69 @@ public class ProjectViewController {
             return "error";
         }
     }
+
+    @GetMapping("/{id}/milestone/new")
+    public String newMilestoneForm(@PathVariable String id, Model model) {
+        try {
+            int projectId = Integer.parseInt(id);
+            ProjectDto projectDto = projectService.findProjectById(projectId);
+            model.addAttribute("milestone", new CreateMilestoneRequest());
+            model.addAttribute("projectId", projectId);
+            model.addAttribute("project", projectDto);
+            return "milestone_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
+    @PostMapping("/{projectId}/milestone")
+    public String createMileStone(@PathVariable String projectId, @ModelAttribute("milestone") CreateMilestoneRequest createMilestoneRequest) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            createMilestoneRequest.setProjectId(projectIdInt);
+            milestoneService.createMilestone(projectIdInt, createMilestoneRequest);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @GetMapping("/{projectId}/milestone/{milestoneId}/edit")
+    public String editMilestoneForm(@PathVariable Integer projectId, @PathVariable Integer milestoneId, Model model) {
+        MilestoneResponseDto milestone = milestoneService.findById(milestoneId);
+        model.addAttribute("milestone", milestone);
+        model.addAttribute("projectId", projectId);
+        return "milestone_edit_form";
+    }
+
+    @PostMapping("/{projectId}/milestone/{milestoneId}")
+    public String updateMilestone(@PathVariable String projectId, @PathVariable String milestoneId, @ModelAttribute("milestone") UpdateMilestoneRequest updateMilestoneRequest) {
+
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int milestoneIdInt = Integer.parseInt(milestoneId);
+            try {
+                milestoneService.updateMilestone(projectIdInt, milestoneIdInt, updateMilestoneRequest);
+                return "redirect:/project/" + projectId;
+            } catch (Exception e) {
+                return "error";
+            }
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
+    @PostMapping("/{projectId}/milestone/{milestoneId}/delete")
+    public String deleteMilestone(@PathVariable String projectId, @PathVariable String milestoneId) {
+        try {
+            int milestoneIdInt = Integer.parseInt(milestoneId);
+            milestoneService.deleteMilestone(milestoneIdInt);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
 }

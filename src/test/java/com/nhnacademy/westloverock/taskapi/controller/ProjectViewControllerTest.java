@@ -1,8 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.controller;
-import com.nhnacademy.westloverock.taskapi.dto.ProjectDto;
-import com.nhnacademy.westloverock.taskapi.dto.ProjectUpdateRequest;
-import com.nhnacademy.westloverock.taskapi.dto.TagDto;
-import com.nhnacademy.westloverock.taskapi.dto.TagUpdateRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.westloverock.taskapi.dto.*;
+import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 @ActiveProfiles("dev")
@@ -34,6 +34,9 @@ class ProjectViewControllerTest {
 
     @MockBean
     private TagService tagService;
+
+    @MockBean
+    private MilestoneService milestoneService;
 
     @Test
     void testFindAllProjects() throws Exception {
@@ -172,5 +175,8 @@ class ProjectViewControllerTest {
 
         verify(tagService).deleteTag(anyInt());
     }
+
+
+
 
 }

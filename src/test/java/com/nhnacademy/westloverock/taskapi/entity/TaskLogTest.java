@@ -34,25 +34,10 @@ class TaskLogTest {
     void getTaskTest() {
         assertEquals(task, taskLog.getTask());
     }
-//    @Test
-//    @DisplayName("작업 Setter 테스트")
-//    void setTaskTest() {
-//        Task newTask = new Task();
-//        taskLog.setTask(newTask);
-//        assertEquals(newTask, taskLog.getTask());
-//    }
 
     @Test
     @DisplayName("아이디 Getter 테스트")
     void getIdTest() {
         assertNotNull(taskLog.getId());
     }
-
-//    @Test
-//    @DisplayName("아이디 Setter 테스트")
-//    void setIdTest() {
-//        TaskLog.Pk newPk = new TaskLog.Pk(LocalDate.now(), 2);
-//        taskLog.setId(newPk);
-//        assertEquals(newPk, taskLog.getId());
-//    }
 }

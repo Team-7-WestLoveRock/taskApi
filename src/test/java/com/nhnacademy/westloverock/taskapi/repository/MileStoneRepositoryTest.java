@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -147,8 +148,64 @@ class MileStoneRepositoryTest {
         assertThat(mileStoneRepository.findById(milestone.getId())).isNotPresent();
     }
 
+//    @Test
+//    void findAllByProject_Id() {
+//        Project project = Project.builder()
+//                .name("qwe")
+//                .description("asdasd")
+//                .state("종료")
+//                .createAt(LocalDateTime.now())
+//                .build();
+//
+//        testEntityManager.persist(project);
+//
+//        Milestone milestone1 = Milestone.builder()
+//                .project(project)
+//                .name("qeqweq1")
+//                .startDate(LocalDate.now())
+//                .endDate(LocalDate.now())
+//                .build();
+//
+//        Milestone milestone2 = Milestone.builder()
+//                .project(project)
+//                .name("qeqweq2")
+//                .startDate(LocalDate.now())
+//                .endDate(LocalDate.now())
+//                .build();
+//
+//        testEntityManager.persist(milestone1);
+//        testEntityManager.persist(milestone2);
+//
+//        assertThat(mileStoneRepository.findAllByProject_Id(project.getId()).size()).isEqualTo(2);
+//    }
+
     @Test
-    void findAllByProject_Id() {
+    void findMilestoneByProject_IdAndId() {
+        Project project = Project.builder()
+                .name("qwe")
+                .description("asdasd")
+                .state("종료")
+                .createAt(LocalDateTime.now())
+                .build();
+
+        testEntityManager.persist(project);
+
+        Milestone milestone1 = Milestone.builder()
+                .project(project)
+                .name("qeqweq1")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
+                .build();
+
+        testEntityManager.persist(milestone1);
+
+        assertThat(mileStoneRepository
+                .findMilestoneByProject_IdAndId(project.getId(), milestone1.getId()))
+                .contains(milestone1);
+    }
+
+    @Test
+    void findByProjectId() {
         Project project = Project.builder()
                 .name("qwe")
                 .description("asdasd")
@@ -174,32 +231,12 @@ class MileStoneRepositoryTest {
 
         testEntityManager.persist(milestone1);
         testEntityManager.persist(milestone2);
+        testEntityManager.flush();
+        testEntityManager.clear();
 
-        assertThat(mileStoneRepository.findAllByProject_Id(project.getId()).size()).isEqualTo(2);
-    }
+        List<Milestone> milestones = mileStoneRepository.findByProjectId(project.getId());
 
-    @Test
-    void findMilestoneByProject_IdAndId() {
-        Project project = Project.builder()
-                .name("qwe")
-                .description("asdasd")
-                .state("종료")
-                .createAt(LocalDateTime.now())
-                .build();
-
-        testEntityManager.persist(project);
-
-        Milestone milestone1 = Milestone.builder()
-                .project(project)
-                .name("qeqweq1")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now())
-                .build();
-
-        testEntityManager.persist(milestone1);
-
-        assertThat(mileStoneRepository
-                .findMilestoneByProject_IdAndId(project.getId(), milestone1.getId()))
-                .contains(milestone1);
+        assertThat(milestones.size()).isEqualTo(2);
+        assertThat(milestones).extracting("name").containsExactlyInAnyOrder(milestone1.getName(), milestone2.getName());
     }
 }
