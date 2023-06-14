@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +29,12 @@ public class CommentController {
     @PostMapping("/{projectId}/task/{taskId}/comment")
     public HttpEntity<CommentWrittenDateResponseDto> createComment(@PathVariable Integer projectId,
                                                                    @PathVariable Integer taskId,
-                                                                   @RequestBody CommentContentRequest commentContentRequest) {
+                                                                   @RequestBody @Valid CommentContentRequest commentContentRequest,
+                                                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException("요청값이 잘못됨");
+        }
+
         CommentRegisterDto commentRegisterDto = CommentRegisterDto.builder()
                 .content(commentContentRequest.getContent())
                 .userId(commentContentRequest.getUserId())
@@ -41,7 +49,12 @@ public class CommentController {
     public HttpEntity<CommentWrittenDateResponseDto> updateComment(@PathVariable Integer projectId,
                                                                    @PathVariable Integer taskId,
                                                                    @PathVariable Integer commentId,
-                                                                   @RequestBody CommentContentRequest commentContentRequest) {
+                                                                   @RequestBody @Valid CommentContentRequest commentContentRequest,
+                                                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException("요청값 오류");
+        }
+
         CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
                 .commentId(commentId)
                 .content(commentContentRequest.getContent())
