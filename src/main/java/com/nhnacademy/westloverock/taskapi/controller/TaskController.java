@@ -22,7 +22,7 @@ public class TaskController {
 
     @GetMapping
     public HttpEntity<List<TaskDto>> findTasksByProjectId(@PathVariable int projectId) {
-        return new ResponseEntity<> (taskService.getTasksByProjectId(projectId), HttpStatus.OK);
+        return new ResponseEntity<> (taskService.findByProjectId(projectId), HttpStatus.OK);
     }
 
     @PostMapping

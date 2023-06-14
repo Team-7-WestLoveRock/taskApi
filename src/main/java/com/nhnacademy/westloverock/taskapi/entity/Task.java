@@ -69,7 +69,6 @@ public class Task {
         dto.setContent(this.content);
         dto.setPriority(this.priority);
         dto.setProjectId(this.project.getId());
-        dto.setMilestoneId(this.milestone != null ? this.milestone.getId() : null);
         dto.setCreatedAt(this.createdAt);
         return dto;
     }

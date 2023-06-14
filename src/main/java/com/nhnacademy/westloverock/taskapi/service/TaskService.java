@@ -1,9 +1,11 @@
 package com.nhnacademy.westloverock.taskapi.service;
 
+import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TaskDto;
 import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
 import com.nhnacademy.westloverock.taskapi.entity.Milestone;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
+import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.entity.Task;
 import com.nhnacademy.westloverock.taskapi.repository.MileStoneRepository;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
@@ -25,12 +27,6 @@ import java.util.stream.Collectors;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
-    private final MileStoneRepository milestoneRepository;
-
-    public List<TaskDto> getTasksByProjectId(int projectId) {
-        List<Task> tasks = taskRepository.findByProjectId(projectId);
-        return tasks.stream().map(Task::toDto).collect(Collectors.toList());
-    }
 
     @Transactional
     public void createTask(int projectId, TaskDto taskDto) {
@@ -66,5 +62,12 @@ public class TaskService {
     @Transactional
     public void deleteTask(int taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public List<TaskDto> findByProjectId(int projectId) {
+        List<Task> tasks = taskRepository.findByProjectId(projectId);
+        return tasks.stream()
+                .map(Task::toDto)
+                .collect(Collectors.toList());
     }
 }
