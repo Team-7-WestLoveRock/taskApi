@@ -258,4 +258,59 @@ public class ProjectViewController {
         }
     }
 
+    @GetMapping("/{projectId}/task/new")
+    public String newTaskForm(@PathVariable String projectId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            model.addAttribute("task", new TaskDto());
+            model.addAttribute("projectId", projectIdInt);
+            return "task_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task")
+    public String createTask(@PathVariable String projectId, @ModelAttribute("task") TaskDto taskDto) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            taskDto.setProjectId(projectIdInt);
+            taskService.createTask(projectIdInt, taskDto);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/{projectId}/task/{taskId}/edit")
+    public String editTaskForm(@PathVariable String projectId, @PathVariable String taskId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int taskIdInt = Integer.parseInt(taskId);
+            TaskDto taskDto = taskService.findTaskByProjectIdAndTaskId(projectIdInt, taskIdInt);
+            model.addAttribute("task", taskDto);
+            model.addAttribute("projectId", projectIdInt);
+            return "task_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}")
+    public String updateTask(@PathVariable int projectId, @PathVariable int taskId, @ModelAttribute("task") TaskDto taskDto) {
+        taskService.updateTask(projectId, taskId, taskDto);
+        return "redirect:/project/" + projectId;
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}/delete")
+    public String deleteTask(@PathVariable String projectId, @PathVariable String taskId) {
+        try {
+            int taskIdInt = Integer.parseInt(taskId);
+            taskService.deleteTask(taskIdInt);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
 }

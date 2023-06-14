@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <title>Title</title>
+  <title>Milestone</title>
 </head>
 <body>
-<h2>Milestones</h2>
+<h2>마일스톤 생성</h2>
 <div class="container">
   <form th:action="@{'/project/' + ${projectId} + '/milestone'}" th:object="${milestone}" th:method="post">
     <div class="form-group">
-      <label for="name">Milestone Name</label>
+      <label for="name">마일스톤 명</label>
       <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter Milestone Name">
     </div>
     <div class="form-group">
-      <label for="startDate">Start Date</label>
+      <label for="startDate">시작일</label>
       <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
     </div>
     <div class="form-group">
-      <label for="endDate">End Date</label>
+      <label for="endDate">종료일</label>
       <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
     </div>
     <button type="submit" class="btn btn-primary">Create Milestone</button>

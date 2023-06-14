@@ -23,33 +23,29 @@ public class TaskService {
 
     @Transactional
     public void createTask(int projectId, TaskDto taskDto) {
-        Project project = projectRepository
-                .findProjectById(projectId)
-                .orElseThrow(() ->
-                        new NoSuchElementException("아이디에 해당하는 프로젝트 없음"));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NoSuchElementException("아이디에 해당하는 프로젝트가 없습니다."));
         Task task = Task.builder()
-                .project(project)
                 .title(taskDto.getTitle())
                 .registerUserId(taskDto.getRegisterUserId())
                 .expirationDate(taskDto.getExpirationDate())
                 .content(taskDto.getContent())
                 .priority(taskDto.getPriority())
                 .createdAt(LocalDateTime.now())
+                .project(project)
                 .build();
 
         taskRepository.save(task);
     }
 
-
     @Transactional
     public void updateTask(Integer projectId, Integer taskId, TaskDto taskDto) {
         Task task = taskRepository
-                .findTaskByProject_IdAndId(projectId, taskId)
+                .findByProjectIdAndId(projectId, taskId)
                 .orElseThrow(() ->
-                        new NoSuchElementException("해당하는 프로젝트id와 taskId와 일치하는 task가 없습니다."));
+                        new NoSuchElementException("해당하는 프로젝트 ID와 Task ID로 일치하는 Task가 없습니다."));
 
         task.updateTask(taskDto);
-
     }
 
     @Transactional
