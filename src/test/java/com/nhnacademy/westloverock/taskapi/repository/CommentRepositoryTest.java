@@ -169,7 +169,16 @@ public class CommentRepositoryTest {
     @Transactional
     void findCommentWrittenDateById() {
         Comment comment = Comment.builder()
-
+                .task(task)
+                .userId("test")
+                .content("i'm hungry")
+                .writtenDate(LocalDateTime.now())
                 .build();
+
+        testEntityManager.persist(comment);
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        assertThat(commentRepository.findCommentWrittenDateById(comment.getId()).get().getWrittenDate()).isEqualTo(comment.getWrittenDate());
     }
 }
