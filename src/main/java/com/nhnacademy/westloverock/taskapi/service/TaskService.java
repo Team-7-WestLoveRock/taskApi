@@ -1,20 +1,13 @@
 package com.nhnacademy.westloverock.taskapi.service;
 
-import com.nhnacademy.westloverock.taskapi.dto.TagDto;
 import com.nhnacademy.westloverock.taskapi.dto.TaskDto;
-import com.nhnacademy.westloverock.taskapi.dto.UpdateMilestoneRequest;
-import com.nhnacademy.westloverock.taskapi.entity.Milestone;
 import com.nhnacademy.westloverock.taskapi.entity.Project;
-import com.nhnacademy.westloverock.taskapi.entity.Tag;
 import com.nhnacademy.westloverock.taskapi.entity.Task;
-import com.nhnacademy.westloverock.taskapi.repository.MileStoneRepository;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly=true)
 public class TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;

@@ -25,7 +25,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Tags</th>
-      <th>Milestones</th> <!-- Milestone column added -->
+      <th>Milestones</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -42,7 +42,7 @@
                     <span th:text="${tag.name}"></span>
                 </span>
       </td>
-      <td> <!-- Milestone data added -->
+      <td>
         <span th:each="milestone : ${projectMilestones[__${project.id}__]}">
                     <span th:text="${milestone.name}"></span>
                     <span th:text="${milestone.startDate}"></span>
