@@ -6,20 +6,20 @@
   <title>Edit Milestone</title>
 </head>
 <body>
-<h2>Edit Milestone</h2>
+<h2>마일스톤 수정</h2>
 <div class="container">
   <form th:action="@{'/project/' + ${projectId} + '/milestone/' + ${milestone.id}}" th:object="${milestone}" th:method="post">
     <input type="hidden" th:field="*{id}" />
     <div class="form-group">
-      <label for="name">Milestone Name</label>
+      <label for="name">마일스톤 명</label>
       <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter Milestone Name" required>
     </div>
     <div class="form-group">
-      <label for="startDate">Start Date</label>
+      <label for="startDate">시작일</label>
       <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
     </div>
     <div class="form-group">
-      <label for="endDate">End Date</label>
+      <label for="endDate">종료</label>
       <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
     </div>
     <button type="submit" class="btn btn-primary">Update Milestone</button>
