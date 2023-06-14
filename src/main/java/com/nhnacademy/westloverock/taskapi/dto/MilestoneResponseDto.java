@@ -1,6 +1,8 @@
 package com.nhnacademy.westloverock.taskapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,7 +16,9 @@ import java.time.LocalDate;
 public class MilestoneResponseDto {
     private int id;
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private int projectId;
 

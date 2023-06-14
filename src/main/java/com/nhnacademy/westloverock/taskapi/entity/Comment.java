@@ -27,7 +27,7 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 45)
     private String content;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")

@@ -191,22 +191,16 @@ public class ProjectViewController {
         }
     }
 
+
     @PostMapping("/{projectId}/milestone")
-    public String createMilestone(@PathVariable("projectId") String projectId,
-                                  @ModelAttribute("milestone") @Valid CreateMilestoneRequest createMilestoneRequest,
-                                  BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "error";
-        }
+    public String createMileStone(@PathVariable String projectId, @ModelAttribute("milestone") CreateMilestoneRequest createMilestoneRequest) {
         try {
             int projectIdInt = Integer.parseInt(projectId);
+            createMilestoneRequest.setProjectId(projectIdInt);
             milestoneService.createMilestone(projectIdInt, createMilestoneRequest);
             return "redirect:/project/" + projectId;
         } catch (NumberFormatException e) {
             return "error";
-        } catch (Exception e) {
-            return "error";
         }
     }
-
 }
