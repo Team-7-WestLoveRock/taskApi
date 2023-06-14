@@ -27,19 +27,12 @@ class TaskAuthorityTest {
                 .authority("Admin")
                 .build();
     }
+
     @Test
     @DisplayName("작업 Getter 테스트")
     void getTaskTest() {
         assertEquals(task, taskAuthority.getTask());
     }
-
-//    @Test
-//    @DisplayName("작업 Setter 테스트")
-//    void setTaskTest() {
-//        Task newTask = new Task();
-//        taskAuthority.setTask(newTask);
-//        assertEquals(newTask, taskAuthority.getTask());
-//    }
 
     @Test
     @DisplayName("권한 Getter 테스트")
@@ -47,24 +40,10 @@ class TaskAuthorityTest {
         assertEquals("Admin", taskAuthority.getAuthority());
     }
 
-//    @Test
-//    @DisplayName("권한 Setter 테스트")
-//    void setAuthorityTest() {
-//        taskAuthority.setAuthority("User");
-//        assertEquals("User", taskAuthority.getAuthority());
-//    }
-
     @Test
     @DisplayName("아이디 Getter 테스트")
     void getIdTest() {
         assertNotNull(taskAuthority.getId());
     }
 
-//    @Test
-//    @DisplayName("아이디 Setter 테스트")
-//    void setIdTest() {
-//        TaskAuthority.Pk newPk = new TaskAuthority.Pk(2, "manseok");
-//        taskAuthority.setId(newPk);
-//        assertEquals(newPk, taskAuthority.getId());
-//    }
 }
