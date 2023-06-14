@@ -60,7 +60,7 @@ create table if not exists Comments
     task_id     int         not null,
     user_id     varchar(45) not null,
     content     varchar(45) not null,
-    writtenDate timestamp   not null,
+    written_date timestamp   not null,
     primary key (id),
     foreign key (task_id) references Tasks (id)
     );

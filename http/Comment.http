@@ -1,0 +1,24 @@
+GET localhost:1998/project/api/projects/1/task/1/comments
+Content-Type: application/json
+
+###
+POST localhost:1998/project/api/projects/1/task/1/comment
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "content": "good bye"
+}
+
+###
+
+POST localhost:1998/project/api/projects/1/task/1/comment/1
+Content-Type: application/json
+
+{
+  "content": "good hi"
+}
+
+###
+DELETE localhost:1998/project/api/projects/1/task/1/comment/2
+Content-Type: application/json

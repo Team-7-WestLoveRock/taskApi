@@ -306,6 +306,22 @@ Response
     }
 ]
 ```
+**POST /project/api/projects/{projectId}/task/{taskId}/comment**  
+ex) 댓글 등록  
+Request
+```json
+{
+    "content": "good bye"
+}
+```
+
+Response
+```json
+{
+    "writtenDate": "2023-06-08T00:00:00"
+}
+```
+
 
 **POST /project/api/projects/{projectId}/task/{taskId}/comment/{commentId}**  
 ex) 댓글 수정  
