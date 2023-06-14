@@ -4,6 +4,7 @@ import com.nhnacademy.westloverock.taskapi.dto.TaskDto;
 import com.nhnacademy.westloverock.taskapi.repository.ProjectRepository;
 import com.nhnacademy.westloverock.taskapi.service.TaskService;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class Task {
 
     @Column(name = "register_user_id", nullable = false, unique = true, length = 45)
     private String registerUserId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
 
