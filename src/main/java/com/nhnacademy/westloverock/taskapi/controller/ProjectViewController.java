@@ -4,6 +4,7 @@ import com.nhnacademy.westloverock.taskapi.dto.*;
 import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import com.nhnacademy.westloverock.taskapi.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +21,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/project")
 public class ProjectViewController {
-
     private final ProjectService projectService;
     private final TagService tagService;
     private final MilestoneService milestoneService;
-
+    private final TaskService taskService;
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
@@ -58,10 +58,12 @@ public class ProjectViewController {
             ProjectDto projectDto = projectService.findProjectById(projectId);
             List<TagDto> tagList = tagService.findByProjectId(projectId);
             List<MilestoneResponseDto> milestoneList = milestoneService.findByProjectId(projectId);
+            List<TaskDto> taskList = taskService.findByProjectId(projectId);
 
             model.addAttribute("project", projectDto);
             model.addAttribute("tags", tagList);
             model.addAttribute("milestones", milestoneList);
+            model.addAttribute("tasks", taskList);
             model.addAttribute("newTag", new TagDto());
 
             return "project_detail";

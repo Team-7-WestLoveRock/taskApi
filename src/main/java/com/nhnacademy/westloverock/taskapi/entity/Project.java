@@ -61,12 +61,14 @@ public class Project {
         dto.setCreateAt(this.createAt);
         return dto;
     }
+
     public void update(String name, String description, String state, LocalDateTime createAt) {
         this.name = name;
         this.description = description;
         this.state = state;
         this.createAt = createAt;
     }
+
     public Project(String name, String description, String state, LocalDateTime createAt) {
         this.name = name;
         this.description = description;

@@ -4,6 +4,7 @@ import com.nhnacademy.westloverock.taskapi.dto.*;
 import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
 import com.nhnacademy.westloverock.taskapi.service.ProjectService;
 import com.nhnacademy.westloverock.taskapi.service.TagService;
+import com.nhnacademy.westloverock.taskapi.service.TaskService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,6 +38,9 @@ class ProjectViewControllerTest {
 
     @MockBean
     private MilestoneService milestoneService;
+
+    @MockBean
+    private TaskService taskService;
 
     @Test
     void testFindAllProjects() throws Exception {

@@ -16,55 +16,65 @@
 <body>
 <div class="container">
     <h1 class="my-4">프로젝트 설정</h1>
-    <div class="row" th:each="project : ${project}">
+    <div class="row">
+        <div class="col-lg-8 col-sm-6 mb-4">
+            <div class="row" th:each="project : ${project}">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                프로젝트명: <span th:text="${project.name}"></span>
+                            </h4>
+                            <p class="card-text">설명: <span th:text="${project.description}"></span></p>
+                        </div>
+                        <div class="card-footer">
+                            상태: <span th:text="${project.state}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/project">전체 프로젝트 리스트</a>
+
+            <h2>Tags</h2>
+            <ul>
+                <li th:each="tag : ${tags}">
+                    <div class="color-box" th:style="'background-color:' + ${tag.color}"></div>
+                    <span th:text="${tag.name}"></span>: <span th:text="${tag.color}"></span>
+                    <a th:href="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/edit'}" class="btn btn-primary">Edit</a>
+                    <form th:action="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/delete'}" th:method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            </ul>
+
+            <h2>Milestones</h2>
+            <ul>
+                <li th:each="milestone : ${milestones}">
+                    마일스톤명: <span th:text="${milestone.name}"></span><br/>
+                    시작일: <span th:text="${milestone.startDate}"></span><br/>
+                    종료일: <span th:text="${milestone.endDate}"></span><br/>
+                    <a th:href="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/edit'}" class="btn btn-primary">Edit</a>
+                    <form th:action="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/delete'}" th:method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            </ul>
+            <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>
+            <a th:href="@{'/project/' + ${project.id} + '/milestone/new'}" class="btn btn-primary">Create MileStone</a>
+        </div>
         <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h4 class="card-title">
-                        프로젝트명: <span th:text="${project.name}"></span>
-                    </h4>
-                    <p class="card-text">설명: <span th:text="${project.description}"></span></p>
-                </div>
-                <div class="card-footer">
-                    상태: <span th:text="${project.state}"></span>
-                </div>
+            <div>
+                <h3>Tasks</h3>
+                <ul>
+                    <li th:each="task : ${tasks}">
+                        <div th:text="${task.title}"></div>
+                        <div th:text="${task.content}"></div>
+                        <div th:text="${task.registerUserId}"></div><br>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <a href="/project">전체 프로젝트 리스트</a>
-
-    <h2>Tags</h2>
-    <ul>
-        <li th:each="tag : ${tags}">
-            <div class="color-box" th:style="'background-color:' + ${tag.color}"></div>
-            <span th:text="${tag.name}"></span>: <span th:text="${tag.color}"></span>
-
-            <a th:href="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/edit'}" class="btn btn-primary">Edit</a>
-
-            <form th:action="@{'/project/' + ${project.id} + '/tag/' + ${tag.id} + '/delete'}" th:method="post" style="display: inline;">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </li>
-    </ul>
-
-    <h2>Milestones</h2>
-    <ul>
-        <li th:each="milestone : ${milestones}">
-            마일스톤명: <span th:text="${milestone.name}"></span><br/>
-            시작일: <span th:text="${milestone.startDate}"></span><br/>
-            종료일: <span th:text="${milestone.endDate}"></span><br/>
-
-            <a th:href="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/edit'}" class="btn btn-primary">Edit</a>
-
-            <form th:action="@{'/project/' + ${project.id} + '/milestone/' + ${milestone.id} + '/delete'}" th:method="post" style="display: inline;">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </li>
-    </ul>
-
-    <a th:href="@{'/project/' + ${project.id} + '/tag/new'}" class="btn btn-primary">Create Tag</a>
-    <a th:href="@{'/project/' + ${project.id} + '/milestone/new'}" class="btn btn-primary">Create MileStone</a>
-
 </div>
 </body>
 </html>
