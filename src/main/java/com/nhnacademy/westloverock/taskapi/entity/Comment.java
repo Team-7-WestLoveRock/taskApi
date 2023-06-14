@@ -27,10 +27,13 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 45)
     private String content;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "written_date", nullable = false)
+    private LocalDateTime writtenDate;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    public void modifyComment(String content) {
+        this.content = content;
+        this.writtenDate = LocalDateTime.now();
+    }
+
 
 }
