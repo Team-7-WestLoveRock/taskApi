@@ -48,7 +48,7 @@
     <h5 th:text="${comment.userId}"></h5>
     <p th:text="${comment.content}"></p>
     <small th:text="${comment.writtenDate}"></small>
-<!--        <a th:href="@{/project/{projectId}/task/{taskId}/comment/{commentId}/edit(projectId=${task.projectId}, taskId=${task.id}, commentId=${comment.id})}" class="btn btn-primary">Edit</a>-->
+        <a th:href="@{/project/{projectId}/task/{taskId}/comment/{commentId}/edit(projectId=${task.projectId}, taskId=${task.id}, commentId=${comment.id})}" class="btn btn-primary">Edit</a>
         <form th:action="@{/project/{projectId}/task/{taskId}/comment/{commentId}/delete(projectId=${task.projectId}, taskId=${task.id}, commentId=${comment.id})}" method="post" style="display:inline;">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>

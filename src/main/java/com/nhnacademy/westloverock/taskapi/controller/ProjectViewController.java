@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.*;
+import com.nhnacademy.westloverock.taskapi.entity.Comment;
 import com.nhnacademy.westloverock.taskapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,10 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -325,7 +323,7 @@ public class ProjectViewController {
         }
     }
 
-    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}")
+    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}/edit")
     public String updateComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId, @ModelAttribute("comment") CommentUpdateDto commentUpdateDto) {
         try {
             int commentIdInt = Integer.parseInt(commentId);
@@ -337,6 +335,19 @@ public class ProjectViewController {
         }
     }
 
+    @GetMapping("/{projectId}/task/{taskId}/comment/{commentId}/edit")
+    public String editCommentForm(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId, Model model) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            CommentResponseDto commentResponseDto = commentService.findCommentById(commentIdInt);
+            model.addAttribute("comment", commentResponseDto);
+            model.addAttribute("projectId", projectId);
+            model.addAttribute("taskId",taskId);
+            return "comment_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
     @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}/delete")
     public String deleteComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId) {
         try {
