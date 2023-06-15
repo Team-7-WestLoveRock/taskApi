@@ -1,8 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import com.nhnacademy.westloverock.taskapi.entity.Comment;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -10,11 +9,16 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @Getter
+@Setter
 public class CommentResponseDto {
-    @NotNull
+    private int id;
     private String userId;
-    @NotNull
+
     private String content;
-    @NotNull
     private LocalDateTime writtenDate;
+    public CommentResponseDto(Comment comment) {
+        this.id = comment.getId();
+        this.content = comment.getContent();
+        this.writtenDate = comment.getWrittenDate();
+    }
 }

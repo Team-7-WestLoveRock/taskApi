@@ -1,6 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class Comment {
 
     @Column(name = "content", nullable = false, length = 45)
     private String content;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "written_date", nullable = false)
     private LocalDateTime writtenDate;
 

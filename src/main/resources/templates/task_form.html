@@ -3,6 +3,14 @@
 <head>
   <title>Create Task</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .form-group label, .form-group input, .form-group select {
+      font-size: 14px;  /* Set the font size of other elements to 14px */
+    }
+    .large-text {
+      font-size: 20px;  /* Set the font size of content to 20px */
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -12,7 +20,7 @@
       <label for="title">제목:</label>
       <input type="text" id="title" th:field="*{title}" class="form-control"/>
     </div>
-    <div class="form-group">
+    <div class="form-group large-text">
       <label for="content">내용:</label>
       <input type="text" id="content" th:field="*{content}" class="form-control"/>
     </div>
@@ -30,7 +38,7 @@
     <div class="form-group">
       <label for="expirationDate">만기일:</label>
       <input type="datetime-local" id="expirationDate" th:field="*{expirationDate}" class="form-control"/>
-    </div>성
+    </div>
     <div class="form-group">
       <label for="register_user_id">작성자:</label>
       <input type="text" id="register_user_id" th:field="*{registerUserId}" class="form-control"/>

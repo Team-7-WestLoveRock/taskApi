@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,7 @@ public class CommentService {
                 .content(commentRegisterDto.getContent())
                 .userId(commentRegisterDto.getUserId())
                 .task(task)
-                .writtenDate(commentRegisterDto.getWrittenDate())
+                .writtenDate(LocalDateTime.now())
                 .build();
 
         commentRepository.save(comment);
@@ -60,4 +62,19 @@ public class CommentService {
     public void deleteComment(Integer commentId) {
         commentRepository.deleteById(commentId);
     }
+
+    public CommentResponseDto findCommentById(int commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+
+            return commentResponseDto;
+        } else {
+            throw new NoSuchElementException("No comment found with id: " + commentId);
+        }
+    }
+
 }

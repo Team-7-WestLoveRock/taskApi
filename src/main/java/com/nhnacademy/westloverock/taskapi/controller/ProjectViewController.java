@@ -1,10 +1,8 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.*;
-import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
-import com.nhnacademy.westloverock.taskapi.service.ProjectService;
-import com.nhnacademy.westloverock.taskapi.service.TagService;
-import com.nhnacademy.westloverock.taskapi.service.TaskService;
+import com.nhnacademy.westloverock.taskapi.entity.Comment;
+import com.nhnacademy.westloverock.taskapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +20,7 @@ public class ProjectViewController {
     private final TagService tagService;
     private final MilestoneService milestoneService;
     private final TaskService taskService;
+    private final CommentService commentService;
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
@@ -249,14 +245,17 @@ public class ProjectViewController {
             int taskIdInt = Integer.parseInt(taskId);
 
             TaskDto taskDto = taskService.findTaskByProjectIdAndTaskId(projectIdInt, taskIdInt);
+            List<CommentResponseDto> commentList = commentService.findCommentList(taskIdInt);
 
             model.addAttribute("task", taskDto);
+            model.addAttribute("comments", commentList);
 
             return "task_detail";
         } catch (NumberFormatException e) {
             return "error";
         }
     }
+
 
     @GetMapping("/{projectId}/task/new")
     public String newTaskForm(@PathVariable String projectId, Model model) {
@@ -308,6 +307,53 @@ public class ProjectViewController {
             int taskIdInt = Integer.parseInt(taskId);
             taskService.deleteTask(taskIdInt);
             return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/task/{taskId}/comment")
+    public String createComment(@PathVariable String projectId, @PathVariable String taskId, @ModelAttribute("comment") CommentRegisterDto commentRegisterDto) {
+        try {
+            int taskIdInt = Integer.parseInt(taskId);
+            commentRegisterDto.setTaskId(taskIdInt);
+            commentService.createComment(commentRegisterDto);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}/edit")
+    public String updateComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId, @ModelAttribute("comment") CommentUpdateDto commentUpdateDto) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            commentUpdateDto.setCommentId(commentIdInt);
+            commentService.updateComment(commentUpdateDto);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/{projectId}/task/{taskId}/comment/{commentId}/edit")
+    public String editCommentForm(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId, Model model) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            CommentResponseDto commentResponseDto = commentService.findCommentById(commentIdInt);
+            model.addAttribute("comment", commentResponseDto);
+            model.addAttribute("projectId", projectId);
+            model.addAttribute("taskId",taskId);
+            return "comment_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            commentService.deleteComment(commentIdInt);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
         } catch (NumberFormatException e) {
             return "error";
         }
