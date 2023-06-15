@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Task Detail</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="my-4">Task Detail</h1>
+  <table class="table table-bordered">
+    <tbody>
+    <tr>
+      <td><b>제목</b></td>
+      <td th:text="${task.title}"></td>
+    </tr>
+    <tr>
+      <td><b>등록자</b></td>
+      <td th:text="${task.registerUserId}"></td>
+    </tr>
+    <tr>
+      <td><b>만기일</b></td>
+      <td th:text="${task.expirationDate}"></td>
+    </tr>
+    <tr>
+      <td><b>우선순위</b></td>
+      <td th:text="${task.priority}"></td>
+    </tr>
+    <tr>
+      <td><b>작성 시간</b></td>
+      <td th:text="${task.createdAt}"></td>
+    </tr>
+    <tr>
+      <td><b>내용</b></td>
+      <td th:text="${task.content}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a th:href="@{/project/{projectId}/task/{taskId}/edit(projectId=${task.projectId}, taskId=${task.id})}" class="btn btn-primary">Edit Task</a>
+  <form th:action="@{/project/{projectId}/task/{taskId}/delete(projectId=${task.projectId}, taskId=${task.id})}" method="post" style="display:inline;">
+    <button type="submit" class="btn btn-danger">Delete Task</button>
+  </form>
+  <a th:href="@{/project/{projectId}(projectId=${task.projectId})}" class="btn btn-secondary">Back to Project</a>
+
+  <h2>Comments</h2>
+  <div th:each="comment : ${comments}">
+    <hr/>
+    <h5 th:text="${comment.userId}"></h5>
+    <p th:text="${comment.content}"></p>
+    <small th:text="${comment.writtenDate}"></small>
+<!--    <a th:href="@{/project/{projectId}/task/{taskId}/comment/{commentId}/edit(projectId=${task.projectId}, taskId=${task.id}, commentId=${comment.id})}" class="btn btn-primary">Edit</a>-->
+<!--    <form th:action="@{/project/{projectId}/task/{taskId}/comment/{commentId}/delete(projectId=${task.projectId}, taskId=${task.id}, commentId=${comment.id})}" method="post" style="display:inline;">-->
+<!--      <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--    </form>-->
+  </div>
+
+  <h2>Add Comment</h2>
+  <form th:action="@{/project/{projectId}/task/{taskId}/comment(projectId=${task.projectId}, taskId=${task.id})}" method="post">
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input type="text" class="form-control" id="userId" name="userId" required>
+    </div>
+    <div class="form-group">
+      <label for="commentContent">Comment</label>
+      <textarea class="form-control" id="commentContent" name="content" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+</div>
+</body>
+</html>

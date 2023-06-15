@@ -1,10 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 
 import com.nhnacademy.westloverock.taskapi.dto.*;
-import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
-import com.nhnacademy.westloverock.taskapi.service.ProjectService;
-import com.nhnacademy.westloverock.taskapi.service.TagService;
-import com.nhnacademy.westloverock.taskapi.service.TaskService;
+import com.nhnacademy.westloverock.taskapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +23,8 @@ public class ProjectViewController {
     private final TagService tagService;
     private final MilestoneService milestoneService;
     private final TaskService taskService;
+    private final CommentService commentService;
+
     @GetMapping
     public String findAllProjects(Model model) {
         List<ProjectDto> projectList = projectService.findAllProjects();
@@ -237,6 +237,114 @@ public class ProjectViewController {
             int milestoneIdInt = Integer.parseInt(milestoneId);
             milestoneService.deleteMilestone(milestoneIdInt);
             return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/{projectId}/task/{taskId}")
+    public String findTaskById(@PathVariable String projectId, @PathVariable String taskId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int taskIdInt = Integer.parseInt(taskId);
+
+            TaskDto taskDto = taskService.findTaskByProjectIdAndTaskId(projectIdInt, taskIdInt);
+            List<CommentResponseDto> commentList = commentService.findCommentList(taskIdInt);
+
+            model.addAttribute("task", taskDto);
+            model.addAttribute("comments", commentList);
+
+            return "task_detail";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+
+    @GetMapping("/{projectId}/task/new")
+    public String newTaskForm(@PathVariable String projectId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            model.addAttribute("task", new TaskDto());
+            model.addAttribute("projectId", projectIdInt);
+            return "task_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task")
+    public String createTask(@PathVariable String projectId, @ModelAttribute("task") TaskDto taskDto) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            taskDto.setProjectId(projectIdInt);
+            taskService.createTask(projectIdInt, taskDto);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/{projectId}/task/{taskId}/edit")
+    public String editTaskForm(@PathVariable String projectId, @PathVariable String taskId, Model model) {
+        try {
+            int projectIdInt = Integer.parseInt(projectId);
+            int taskIdInt = Integer.parseInt(taskId);
+            TaskDto taskDto = taskService.findTaskByProjectIdAndTaskId(projectIdInt, taskIdInt);
+            model.addAttribute("task", taskDto);
+            model.addAttribute("projectId", projectIdInt);
+            return "task_edit_form";
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}")
+    public String updateTask(@PathVariable int projectId, @PathVariable int taskId, @ModelAttribute("task") TaskDto taskDto) {
+        taskService.updateTask(projectId, taskId, taskDto);
+        return "redirect:/project/" + projectId;
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}/delete")
+    public String deleteTask(@PathVariable String projectId, @PathVariable String taskId) {
+        try {
+            int taskIdInt = Integer.parseInt(taskId);
+            taskService.deleteTask(taskIdInt);
+            return "redirect:/project/" + projectId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+    @PostMapping("/{projectId}/task/{taskId}/comment")
+    public String createComment(@PathVariable String projectId, @PathVariable String taskId, @ModelAttribute("comment") CommentRegisterDto commentRegisterDto) {
+        try {
+            int taskIdInt = Integer.parseInt(taskId);
+            commentRegisterDto.setTaskId(taskIdInt);
+            commentService.createComment(commentRegisterDto);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}")
+    public String updateComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId, @ModelAttribute("comment") CommentUpdateDto commentUpdateDto) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            commentUpdateDto.setCommentId(commentIdInt);
+            commentService.updateComment(commentUpdateDto);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
+        } catch (NumberFormatException e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/{projectId}/task/{taskId}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable String projectId, @PathVariable String taskId, @PathVariable String commentId) {
+        try {
+            int commentIdInt = Integer.parseInt(commentId);
+            commentService.deleteComment(commentIdInt);
+            return "redirect:/project/" + projectId + "/task/" + taskId;
         } catch (NumberFormatException e) {
             return "error";
         }
