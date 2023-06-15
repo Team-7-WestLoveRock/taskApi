@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -36,7 +37,7 @@ public class CommentService {
                 .content(commentRegisterDto.getContent())
                 .userId(commentRegisterDto.getUserId())
                 .task(task)
-                .writtenDate(commentRegisterDto.getWrittenDate())
+                .writtenDate(LocalDateTime.now())
                 .build();
 
         commentRepository.save(comment);

@@ -1,10 +1,7 @@
 package com.nhnacademy.westloverock.taskapi.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.westloverock.taskapi.dto.*;
-import com.nhnacademy.westloverock.taskapi.service.MilestoneService;
-import com.nhnacademy.westloverock.taskapi.service.ProjectService;
-import com.nhnacademy.westloverock.taskapi.service.TagService;
-import com.nhnacademy.westloverock.taskapi.service.TaskService;
+import com.nhnacademy.westloverock.taskapi.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,7 +38,8 @@ class ProjectViewControllerTest {
 
     @MockBean
     private TaskService taskService;
-
+    @MockBean
+    private CommentService commentService;
     @Test
     void testFindAllProjects() throws Exception {
         ProjectDto projectDto1 = new ProjectDto();
