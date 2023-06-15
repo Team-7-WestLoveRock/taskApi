@@ -3,6 +3,11 @@
 <head>
   <title>Task Detail</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .large-text {
+      font-size: 20px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -29,7 +34,7 @@
       <td><b>작성 시간</b></td>
       <td th:text="${task.createdAt}"></td>
     </tr>
-    <tr>
+    <tr class="large-text">
       <td><b>내용</b></td>
       <td th:text="${task.content}"></td>
     </tr>
