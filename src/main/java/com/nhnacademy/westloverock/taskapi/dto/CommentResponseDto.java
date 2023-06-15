@@ -1,8 +1,6 @@
 package com.nhnacademy.westloverock.taskapi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -10,11 +8,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @Getter
+@Setter
 public class CommentResponseDto {
-    @NotNull
+    private int id;
     private String userId;
-    @NotNull
+
     private String content;
-    @NotNull
     private LocalDateTime writtenDate;
 }
