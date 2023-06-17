@@ -3,8 +3,7 @@ package com.nhnacademy.westloverock.taskapi.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ public class ProjectDto{
     private String description;
     private String state;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime createAt;
+    private LocalDate createAt;
 
     public ProjectDto toDto() {
         ProjectDto dto = new ProjectDto();
