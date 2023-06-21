@@ -10,6 +10,9 @@ Task-api는 프로젝트, 작업, 코멘트, 태그, 마일스톤 정보를 관�
 
 - 이러한 각각의 서비스는 독립적으로 배포되고 확장될 수 있어야 하며, 서로의 독립성을 유지하면서 효과적으로 통신할 수 있어야 합니다.
 
+## ERD
+![taskapi-erd](https://github.com/Team-7-WestLoveRock/taskApi/assets/76582376/a9e6b7cd-a0b1-48ae-9da9-4f333d221ff4)
+
 # API SPEC
 
 ## Project  

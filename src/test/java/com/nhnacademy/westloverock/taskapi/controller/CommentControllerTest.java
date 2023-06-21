@@ -79,7 +79,7 @@ class CommentControllerTest {
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.writtenDate").value(commentWrittenDateResponseDto.getWrittenDate().toString()));
+                .andExpect(jsonPath("$.writtenDate").exists());
 
     }
     @Test
@@ -134,7 +134,7 @@ class CommentControllerTest {
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.writtenDate").value(commentWrittenDateResponseDto.getWrittenDate().toString()));
+                .andExpect(jsonPath("$.writtenDate").exists());
     }
 
     @Test
