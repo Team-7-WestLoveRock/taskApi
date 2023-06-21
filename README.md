@@ -2,6 +2,9 @@
 
 Task-api는 프로젝트, 작업, 코멘트, 태그, 마일스톤 정보를 관리합니다. 이 서비스에서는 Project, Task, Comment, Tag, Milestone이라는 객체들을 중심으로 도메인을 모델링합니다.
 
+## ERD
+![taskapi-erd](https://github.com/Team-7-WestLoveRock/taskApi/assets/76582376/a9e6b7cd-a0b1-48ae-9da9-4f333d221ff4)
+
 ## 요구사항
 
 - Project, Task, Comment, Tag, Milestone 정보를 관리하는 API를 제공합니다.
